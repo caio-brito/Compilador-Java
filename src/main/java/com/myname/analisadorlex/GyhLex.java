@@ -4,65 +4,49 @@ public class GyhLex {
 
     public Token geraToken(String linha) {
 
-        int count = 0, estado = 0;//Contador do indice atual da linha recebida para verificacao no automato e estado do automato
-        char c1, c2 = 0;
-        String C1;
+        int count = 0, estado = 1;//Contador do indice atual da linha recebida para verificacao no automato e estado do automato
+        String c1, c2;
+        String auxiliar;
 
         ProxChar lpc = new ProxChar();
 
-        while (count < linha.length() - 1) {
+        c1 = String.valueOf(lpc.LerProxChar(linha, count));
 
-            c1 = lpc.LerProxChar(linha, count);
+        // if (linha.length() > count + 1) {
+        count++;
+        c2 = String.valueOf(lpc.LerProxChar(linha, count));
+        // }
 
-            if (linha.length() >= count + 1) {
+        // while (estado != -1) {
+        switch (estado) {
 
-                count++;
-                c2 = lpc.LerProxChar(linha, count);
-            }
+            case 1://Estado 1 do automato              
+                   System.out.println(c1);
+                   System.out.println(c2);
+               /* if (c1 == '*') {//Estado 2 do desenho
 
-            while (estado != -1) {
+                } else if (c1 == '/') {
 
-                switch (estado) {
+                } else if (c1 == '+') {
 
-                    case 1:
+                } else if (c1 == '-') {
 
-                        if (c1 == '*') {
-
-                        } else if (c1 == '/') {
-
-                        } else if (c1 == '+') {
-
-                        } else if (c1 == '-') {
-
-                        } else if (c1 == '<') {//Estado 6 do desenho
-
-                            if (c2 == '=') {//Estado 7 do desenho
-
-                                C1 = String.valueOf(c1) + String.valueOf(c2);
-                                count++;
-                                return new Token(TipoToken.OpRelMenorIgual, C1);
-                            } else {
-                                C1 = String.valueOf(c1);
-                                return new Token(TipoToken.OpRelMenor, C1);
-                            }
-
-                        } else if (c1 == '<' && c2 == '=') {//Estado 8 do desenho
-
-                        }
-
-                        break;
-
+                } else*/ if (c1.contains("<")) {//Estado 6 do desenho
+                    
+                    if (c2.contains("=")) {//Estado 7 do desenho
+                        System.out.println("Chegou aqui");
+                        auxiliar = c1 + c2;
+                        count++;
+                        return new Token(TipoToken.OpRelMenorIgual, auxiliar);
+                    } else {//Estado 8 do desenho
+                        
+                        return new Token(TipoToken.OpRelMenor, c1);
+                    }
                 }
-            }
-        }
-        /*
-        if (c1 == ':' && c2 != '=') {
+                
+                break;
 
-            return new Token(TipoToken.Delim, ":");
-        } else {
-            return new Token(TipoToken.Atrib, ":=");
         }
-         */
         return null;
     }
 }
