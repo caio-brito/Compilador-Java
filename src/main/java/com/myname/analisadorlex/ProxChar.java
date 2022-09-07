@@ -9,6 +9,6 @@ public class ProxChar {
     }
 
     public boolean confere(String str, int contador) {
-        return str.length() > contador + 2;
-    }
+        return str.length() > contador + 2; 
+   }
 }

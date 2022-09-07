@@ -15,8 +15,8 @@ public class GyhLex {
         // if (linha.length() > count + 1) {
         count++;
         c2 = String.valueOf(lpc.LerProxChar(linha, count));
-        // }
 
+        // }
         // while (estado != -1) {
         switch (estado) {
 
@@ -64,13 +64,39 @@ public class GyhLex {
                         return new Token(TipoToken.OpRelMaior, c1);
 
                     }
+                } else if (c1.equals("=")) {//Estado 12 do desenho
+
+                    if (c2.equals("=")) {//   Estado 13 do desenho
+
+                        auxiliar = c1 + c2;
+                        return new Token(TipoToken.OpRelIgual, auxiliar);
+                    } else {
+
+                        //TRATAR ERRO, POIS NAO VAI PERTENCER A LINGUAGEM
+                    }
                 } else if (c1.equals("!")) {//Estado 14 do desenho
 
-                    if (c2.equals("=")) {//     Estado 15 do desenho
-                        
+                    if (c2.equals("=")) {//  Estado 15 do desenho
+
                         auxiliar = c1 + c2;
                         return new Token(TipoToken.OpRelDif, auxiliar);
                     }
+                } else if (c1.equals("F")) {
+                    
+                    if (c2.equals("I")) {
+                        
+                        auxiliar = c1 + c2;
+                        if (lpc.confere(linha, count)) {
+                            
+                            c1 = String.valueOf(lpc.LerProxChar(linha, count +2));
+                            if (c1.equals("M")) {
+                                System.out.println("Entrou");
+                                auxiliar = auxiliar + c1;
+                                return new Token(TipoToken.PCFim, auxiliar);
+                            }
+                        }
+                    }
+
                 }
         }
         return null;
