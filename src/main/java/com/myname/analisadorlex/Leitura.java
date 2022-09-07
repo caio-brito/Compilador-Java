@@ -20,8 +20,8 @@ public class Leitura {
     public String LerLinha() throws FileNotFoundException, IOException {//arqPast deve ser uma String com a origem do arquivo a ser manipulado
 
         String linha = br.readLine();//Le uma linha completa do arquivo passado para o metodo LerLinha
-
-        return linha;
+          String spaceLinha = linha.replaceAll("\\s", ""); //Retirando os espacos em branco da string lida  
+        return spaceLinha;
     }
 
 }

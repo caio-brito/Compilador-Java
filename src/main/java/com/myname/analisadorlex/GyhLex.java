@@ -21,31 +21,54 @@ public class GyhLex {
         switch (estado) {
 
             case 1://Estado 1 do automato              
-                   System.out.println(c1);
-                   System.out.println(c2);
-               /* if (c1 == '*') {//Estado 2 do desenho
 
-                } else if (c1 == '/') {
+                //Operadores Aritimeticos
+                if (c1.equals("*")) {//Estado 2 do desenho
 
-                } else if (c1 == '+') {
+                    return new Token(TipoToken.OpAritMult, c1);
 
-                } else if (c1 == '-') {
+                } else if (c1.equals("/")) {// Estado 3 do desenho
 
-                } else*/ if (c1.contains("<")) {//Estado 6 do desenho
-                    
-                    if (c2.contains("=")) {//Estado 7 do desenho
-                        System.out.println("Chegou aqui");
+                    return new Token(TipoToken.OpAritDiv, c1);
+
+                } else if (c1.equals("+")) {// Estado 4 do desenho
+
+                    return new Token(TipoToken.OpAritSoma, c1);
+
+                } else if (c1.equals("-")) {// Estado 5 do desenho
+
+                    return new Token(TipoToken.OpAritSub, c1);
+
+                } else if (c1.equals("<")) {// Estado 6 do desenho
+
+                    if (c2.equals("=")) {//    Estado 7 do desenho
+
                         auxiliar = c1 + c2;
-                        count++;
                         return new Token(TipoToken.OpRelMenorIgual, auxiliar);
-                    } else {//Estado 8 do desenho
+                        
+                    } else {//                 Estado 8 do desenho
                         
                         return new Token(TipoToken.OpRelMenor, c1);
+                        
+                    }
+                } else if (c1.equals(">")) {//Estado 9 do desenho
+
+                    if (c2.equals("=")) {//   Estado 10 do desenho
+
+                        auxiliar = c1 + c2;
+                        return new Token(TipoToken.OpRelMaiorIgual, auxiliar);
+                        
+                    } else {//                Estado 11 do desenho
+                        
+                        return new Token(TipoToken.OpRelMaior, c1);
+                        
+                    }
+                } else if (c1.equals("!")) {//Estado 14 do desenho
+                    
+                    if(c2.equals("=")){//     Estado 15 do desenho
+                    return new Token(TipoToken.OpRelDif, c1);
                     }
                 }
-                
-                break;
-
         }
         return null;
     }
