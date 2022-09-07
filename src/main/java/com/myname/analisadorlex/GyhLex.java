@@ -13,8 +13,7 @@ public class GyhLex {
         c1 = String.valueOf(lpc.LerProxChar(linha, count));
 
         // if (linha.length() > count + 1) {
-        count++;
-        c2 = String.valueOf(lpc.LerProxChar(linha, count));
+        c2 = String.valueOf(lpc.LerProxChar(linha, count + 1));
 
         // }
         // while (estado != -1) {
@@ -40,6 +39,7 @@ public class GyhLex {
                     return new Token(TipoToken.OpAritSub, c1);
 
                 } else //Operadores Relacionais---------------------------------
+                //
                 if (c1.equals("<")) {//        Estado 6 do desenho
 
                     if (c2.equals("=")) {//    Estado 7 do desenho
@@ -81,260 +81,119 @@ public class GyhLex {
                         auxiliar = c1 + c2;
                         return new Token(TipoToken.OpRelDif, auxiliar);
                     }
-                } else if (c1.equals("F")) {
-                    
-                    if (c2.equals("I")) {
-                        
+                } else//Palavra chave------------------------------------------- 
+                //
+                if (c1.equals("F")) {//  Estado 16 do desenho
+                    if (c2.equals("I")) {//  Estado 17 do desenho
+
                         auxiliar = c1 + c2;
                         if (lpc.confere(linha, count)) {
-                            
-                            c1 = String.valueOf(lpc.LerProxChar(linha, count +2));
-                            if (c1.equals("M")) {
-                                System.out.println("Entrou");
+
+                            count = count + 2;
+                            c1 = String.valueOf(lpc.LerProxChar(linha, count));
+                            if (c1.equals("M")) {//  Estado 18 do desenho
                                 auxiliar = auxiliar + c1;
                                 return new Token(TipoToken.PCFim, auxiliar);
                             }
+                        }//COLCOAR CONTROLE DE ERRO
+                    }
+                } else if (c1.equals("R")) {//  Estado 19 do desenho
+
+                    if (c2.equals("E")) {//  Estado 20 do desenho
+
+                        auxiliar = c1 + c2;
+                        if (lpc.confere(linha, count)) {
+
+                            count++;
+                            c1 = String.valueOf(lpc.LerProxChar(linha, count));
+                            c2 = String.valueOf(lpc.LerProxChar(linha, count + 1));
+
+                            if (c1.equals("A")) {//  Estado 21 do desenho
+
+                                if (c2.equals("L")) {//  Estado 22 do desenho
+
+                                    auxiliar = auxiliar + c1 + c2;
+                                    return new Token(TipoToken.PCReal, auxiliar);
+                                }
+                            }
+                        } else {
+                            //Printar erro na formacao da palavra chave REAL
                         }
                     }
+                } else if (c1.equals("E")) {
 
-                }
-        }
-        return null;
-    }
-}
+                    if (c2.compareTo("N") != 0) {
 
-/* 
-    private Token operadorAritmetico() {
-        int caractereLido = ldat.lerProxCaractere();
-        char c = (char) caractereLido;
-        if (c == '*') {
-            return new Token(TipoToken.OpAritMult, "*");
-        } else if (c == '/') {
-            return new Token(TipoToken.OpAritDiv, "/");
-        } else if (c == '+') {
-            return new Token(TipoToken.OpAritSoma, "+");
-        } else if (c == '-') {
-            return new Token(TipoToken.OpAritSub, "-");
-        } else {
-            return null;
-        }
-
-    }
-
-    
-    
-
-    private Token parenteses() {
-        int caractereLido = ldat.lerProxCaractere();
-        char c = (char) caractereLido;
-        if (c == '(') {
-            return new Token(TipoToken.AbrePar, "(");
-        } else if (c == ')') {
-            return new Token(TipoToken.FechaPar, ")");
-        } else {
-            return null;
-        }
-    }
-
-    private Token operadorRelacional() {
-        int caractereLido = ldat.lerProxCaractere();
-        char c = (char) caractereLido;
-        if (c == '<') {
-            c = (char) ldat.lerProxCaractere();
-            if (c == '=') {
-                return new Token(TipoToken.OpRelMenorIgual, "<=");
-            } else {
-                ldat.retroceder();
-                return new Token(TipoToken.OpRelMenor, "<");
-            }
-        } else if (c == '>') {
-            c = (char) ldat.lerProxCaractere();
-            if (c == '=') {
-                return new Token(TipoToken.OpRelMaiorIgual, ">=");
-            } else {
-                ldat.retroceder();
-                return new Token(TipoToken.OpRelMaior, ">");
-            }
-        } else if (c == '=') {
-            c = (char) ldat.lerProxCaractere();
-            if (c == '=') {
-                return new Token(TipoToken.OpRelIgual, "==");
-            } else {
-                ldat.retroceder();
-            }
-        } else if (c == '!') {
-            c = (char) ldat.lerProxCaractere();
-            if (c == '=') {
-                return new Token(TipoToken.OpRelDif, "!=");
-            } else {
-                ldat.retroceder();
-            }
-        }
-        return null;
-    }
-
-    private Token numeros() {
-        int estado = 1;
-        while (true) {
-            char c = (char) ldat.lerProxCaractere();
-            if (estado == 1) {
-                if (Character.isDigit(c)) {
-                    estado = 2;
-                } else {
-                    return null;
-                }
-            } else if (estado == 2) {
-                if (c == '.') {
-                    c = (char) ldat.lerProxCaractere();
-                    if (Character.isDigit(c)) {
-                        estado = 3;
+                        return new Token(TipoToken.OpBoolE, c1);
                     } else {
-                        return null;
+
+                        auxiliar = c1 + c2;
+
+                        if (lpc.confere(linha, count)) {
+
+                            count = count + 2;
+                            c1 = String.valueOf(lpc.LerProxChar(linha, count));
+                            c2 = String.valueOf(lpc.LerProxChar(linha, count + 1));
+                            auxiliar = auxiliar + c1 + c2;
+                            if (c1.equals("T")) {
+
+                                if (c2.equals("A") && lpc.confere(linha, count)) {
+
+                                    count = count + 2;
+                                    c1 = String.valueOf(lpc.LerProxChar(linha, count));
+                                    if (c1.equals("O")) {
+
+                                        auxiliar = auxiliar + c1;
+                                        return new Token(TipoToken.PCEntao, auxiliar);
+                                    }
+                                }
+                            } else if (c1.equals("Q")) {
+
+                                if (c2.equals("T") && lpc.confere(linha, count)) {
+
+                                    count = count + 2;
+                                    c1 = String.valueOf(lpc.LerProxChar(linha, count));
+                                    if (c1.equals("O")) {
+
+                                        auxiliar = auxiliar + c1;
+                                        return new Token(TipoToken.PCEnqto, auxiliar);
+                                    }
+                                }
+                            }
+                        }
                     }
-                } else if (!Character.isDigit(c)) {
-                    ldat.retroceder();
-                    return new Token(TipoToken.NumInt, ldat.getLexema());
-                }
-            } else if (estado == 3) {
-                if (!Character.isDigit(c)) {
-                    ldat.retroceder();
-                    return new Token(TipoToken.NumReal, ldat.getLexema());
-                }
+                } else //Atribuicao - Delimitador - Parenteses------------------- 
+                if (c1.equals("(")) {
 
-            }
+                    return new Token(TipoToken.AbrePar, c1);
 
-        }
+                } else if (c1.equals(")")) {
 
-    }
+                    return new Token(TipoToken.FechaPar, c1);
 
-    private Token variavel() {
-        int estado = 1;
-        while (true) {
-            char c = (char) ldat.lerProxCaractere();
-            if (estado == 1) {
-                if (Character.isLetter(c)) {
-                    estado = 2;
-                } else {
-                    return null;
-                }
-            } else if (estado == 2) {
-                if (!Character.isLetterOrDigit(c)) {
-                    ldat.retroceder();
-                    return new Token(TipoToken.Var, ldat.getLexema());
-                }
-            }
-        }
-    }
+                } else if (c1.equals(":")) {
 
-    private Token cadeia() {
-        int estado = 1;
-        while (true) {
-            char c = (char) ldat.lerProxCaractere();
-            if (estado == 1) {
-                if (c == '\'') {
-                    estado = 2;
-                } else {
-                    return null;
-                }
-            } else if (estado == 2) {
-                if (c == '\n') {
-                    return null;
-                }
-                if (c == '\'') {
-                    return new Token(TipoToken.Cadeia, ldat.getLexema());
-                } else if (c == '\\') {
-                    estado = 3;
-                }
-            } else if (estado == 3) {
-                if (c == '\n') {
-                    return null;
-                } else {
-                    estado = 2;
-                }
-            }
+                    if (c2.equals("=")) {
 
-        }
+                        auxiliar = c1 + c2;
 
-    }
+                        return new Token(TipoToken.Atrib, auxiliar);
 
-    private void espacoEComentarios() {
-        int estado = 1;
-        while (true) {
-            char c = (char) ldat.lerProxCaractere();
-            if (estado == 1) {
-                if (Character.isWhitespace(c) || c == ' ') {
-                    estado = 2;
-                } else if (c == '%') {
-                    estado = 3;
-                } else {
-                    ldat.retroceder();
-                    return;
+                    } else {
+
+                        return new Token(TipoToken.Delim, c1);
+
+                    }
+                } else if (c1.equals("O")) {
+                    if (c2.equals("U")) {
+                        auxiliar = c1 + c2;
+                        return new Token(TipoToken.OpBoolOu, auxiliar);
+                    } else {
+                        //Tratar erro 
+                    }
                 }
-            } else if (estado == 2) {
-                if (c == '%') {
-                    estado = 3;
-                } else if (!(Character.isWhitespace(c) || c == ' ')) {
-                    ldat.retroceder();
-                    return;
-                }
-            } else if (estado == 3) {
-                if (c == '\n') {
-                    return;
-                }
-            }
-        }
-
-    }
-
-    private Token palavrasChave() {
-        while (true) {
-            char c = (char) ldat.lerProxCaractere();
-            if (!Character.isLetter(c)) {
-                ldat.retroceder();
-                String lexema = ldat.getLexema();
-                if (lexema.equals("DEC")) {
-                    return new Token(TipoToken.PCDec, lexema);
-                } else if (lexema.equals("PR")) {
-                    return new Token(TipoToken.PCProg, lexema);
-                } else if (lexema.equals("INT")) {
-                    return new Token(TipoToken.NumInt, lexema);
-                } else if (lexema.equals("REAL")) {
-                    return new Token(TipoToken.PCReal, lexema);
-                } else if (lexema.equals("LER")) {
-                    return new Token(TipoToken.PCLer, lexema);
-                } else if (lexema.equals("IMPRIMIR")) {
-                    return new Token(TipoToken.PCImprimir, lexema);
-                } else if (lexema.equals("SE")) {
-                    return new Token(TipoToken.PCSe, lexema);
-                } else if (lexema.equals("SENAO")) {
-                    return new Token(TipoToken.PCSenao, lexema);
-                } else if (lexema.equals("ENTAO")) {
-                    return new Token(TipoToken.PCEntao, lexema);
-                } else if (lexema.equals("ENQTO")) {
-                    return new Token(TipoToken.PCEnqto, lexema);
-                } else if (lexema.equals("INI")) {
-                    return new Token(TipoToken.PCIni, lexema);
-                } else if (lexema.equals("FIM")) {
-                    return new Token(TipoToken.PCFim, lexema);
-                } else if (lexema.equals("E")) {
-                    return new Token(TipoToken.OpBoolE, lexema);
-                } else if (lexema.equals("OU")) {
-                    return new Token(TipoToken.OpBoolOu, lexema);
-                } else {
-                    return null;
-                }
-            }
-        }
-    }
-
-    private Token fim() {
-        int caractereLido = ldat.lerProxCaractere();
-        if (caractereLido == -1) {
-            return new Token(TipoToken.Fim, "Fim");
+                return null;
         }
         return null;
     }
-    
-    
 }
- */
