@@ -8,9 +8,9 @@ public class AnalisadorLex {
       
         Leitura l = new Leitura(args[0]);
         GyhLex identChar = new GyhLex(); 
-        
+        String LinhaLida;
        
-        String LinhaLida = l.LerLinha();
+        LinhaLida = l.LerLinha();
         Token s = identChar.geraToken(LinhaLida);
         System.out.print(s);
         

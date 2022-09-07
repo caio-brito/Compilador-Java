@@ -22,7 +22,7 @@ public class GyhLex {
 
             case 1://Estado 1 do automato              
 
-                //Operadores Aritimeticos
+                //Operadores Aritimeticos---------------------------------------
                 if (c1.equals("*")) {//Estado 2 do desenho
 
                     return new Token(TipoToken.OpAritMult, c1);
@@ -39,17 +39,18 @@ public class GyhLex {
 
                     return new Token(TipoToken.OpAritSub, c1);
 
-                } else if (c1.equals("<")) {// Estado 6 do desenho
+                } else //Operadores Relacionais---------------------------------
+                if (c1.equals("<")) {//        Estado 6 do desenho
 
                     if (c2.equals("=")) {//    Estado 7 do desenho
 
                         auxiliar = c1 + c2;
                         return new Token(TipoToken.OpRelMenorIgual, auxiliar);
-                        
+
                     } else {//                 Estado 8 do desenho
-                        
+
                         return new Token(TipoToken.OpRelMenor, c1);
-                        
+
                     }
                 } else if (c1.equals(">")) {//Estado 9 do desenho
 
@@ -57,16 +58,18 @@ public class GyhLex {
 
                         auxiliar = c1 + c2;
                         return new Token(TipoToken.OpRelMaiorIgual, auxiliar);
-                        
+
                     } else {//                Estado 11 do desenho
-                        
+
                         return new Token(TipoToken.OpRelMaior, c1);
-                        
+
                     }
                 } else if (c1.equals("!")) {//Estado 14 do desenho
-                    
-                    if(c2.equals("=")){//     Estado 15 do desenho
-                    return new Token(TipoToken.OpRelDif, c1);
+
+                    if (c2.equals("=")) {//     Estado 15 do desenho
+                        
+                        auxiliar = c1 + c2;
+                        return new Token(TipoToken.OpRelDif, auxiliar);
                     }
                 }
         }
