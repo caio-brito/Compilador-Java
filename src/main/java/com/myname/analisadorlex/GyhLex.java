@@ -4,158 +4,75 @@ public class GyhLex {
 
     public Token geraToken(String linha) {
 
-       
-        String auxiliar;
-        ProxChar lpc = new ProxChar();
+        String tokenLido;
 
-        c1 = String.valueOf(lpc.LerProxChar(linha, count));
-
-        // if (linha.length() > count + 1) {
-        c2 = String.valueOf(lpc.LerProxChar(linha, count + 1));
-
-        // }
-        // while (estado != -1) {
-        switch (estado) {
-
-            case 1: //Estado 1 do automato
-                //Operadores Aritimeticos---------------------------------------
-                switch (c1) {
+//Operadores Aritimeticos-------------------------------------------------------
+                switch (tokenLido) {
                     case "*":
-                        return new Token(TipoToken.OpAritMult, c1);
+                        return new Token(TipoToken.OpAritMult, tokenLido);
                     case "/":
-                        return new Token(TipoToken.OpAritDiv, c1);
+                        return new Token(TipoToken.OpAritDiv, tokenLido);
                     case "+":
-                        return new Token(TipoToken.OpAritSoma, c1);
+                        return new Token(TipoToken.OpAritSoma, tokenLido);
                     case "-":
-                        return new Token(TipoToken.OpAritSub, c1);
-                    //Operadores Relacionais---------------------------------
-                    //
+                        return new Token(TipoToken.OpAritSub, tokenLido);
+
+//Operadores Relacionais--------------------------------------------------------
                     case "<=":
-                        
-                    return new Token(TipoToken.OpRelMenorIgual, auxiliar);
-                        
-                    break;
-                           
+                        return new Token(TipoToken.OpRelMenorIgual, tokenLido);
                     case "<":
-                        
-                    return new Token(TipoToken.OpRelMenor, c1);
-                        
-                    break;
-                        
-
-                    return new Token(TipoToken.OpRelMenor, c1);
-
+                        return new Token(TipoToken.OpRelMenor, tokenLido);
                     case ">=":
-                       
-                    return new Token(TipoToken.OpRelMaiorIgual, auxiliar);
-
-                    break;
+                        return new Token(TipoToken.OpRelMaiorIgual, tokenLido);
                     case ">":
-                       
-                    return new Token(TipoToken.OpRelMaior, c1);
-
-                    break;    
-                        
+                        return new Token(TipoToken.OpRelMaior, tokenLido);
                     case "=":
-                        
-                    return new Token(TipoToken.OpRelIgual, auxiliar);
-                        
-                        break;
+                        return new Token(TipoToken.OpRelIgual, tokenLido);
                     case "!=":
-                       
-                        return new Token(TipoToken.OpRelDif, auxiliar);
-                        
-                        break;
-                    //Palavra chave-------------------------------------------
-                    //
+                        return new Token(TipoToken.OpRelDif, tokenLido);
+
+//Palavra chave-----------------------------------------------------------------
                     case "FIM":
-                     return new Token(TipoToken.PCFim, auxiliar);
-                                
-                        break;
+                        return new Token(TipoToken.PCFim, tokenLido);
                     case "REAl":
-                        
-
-                    return new Token(TipoToken.PCReal, auxiliar);
-                                  
-                        break;
-                        
+                        return new Token(TipoToken.PCReal, tokenLido);
                     case "E":
-                    
-                    return new Token(TipoToken.OpBoolE, c1);
-                       
-                    
-                    break;
+                        return new Token(TipoToken.OpBoolE, tokenLido);
                     case "ENTAO":
-                    
-                    return new Token(TipoToken.PCEntao, auxiliar);
-                    
-                    break;
+                        return new Token(TipoToken.PCEntao, tokenLido);
                     case "ENQTO":
-                    
-                    return new Token(TipoToken.PCEnqto, auxiliar);
-                                     
-                        break;
+                        return new Token(TipoToken.PCEnqto, tokenLido);
                     case "LER":
-                        
-                                    return new Token(TipoToken.PCLer, auxiliar);
-                           
-                        break;
+                        return new Token(TipoToken.PCLer, tokenLido);
                     case "INI":
-                        
-                    return new Token(TipoToken.PCIni, auxiliar);
-                    
-                    break;
+                        return new Token(TipoToken.PCIni, tokenLido);
                     case "INT":
-                                        
-                    return new Token(TipoToken.PCInt, auxiliar);
-                                    
-                    break;
-                    
+                        return new Token(TipoToken.PCInt, tokenLido);
                     case "IMPRIMIR":
-
-                    return new Token(TipoToken.PCImprimir, auxiliar);
-                            
-                    break;
+                        return new Token(TipoToken.PCImprimir, tokenLido);
                     case "DEC":
-                        
-                    return new Token(TipoToken.PCDec, auxiliar);
-                    
-                    break;
+                        return new Token(TipoToken.PCDec, tokenLido);
                     case "PROG":
-                    
-                    return new Token(TipoToken.PCProg, auxiliar);
-                                    
-                    break;
-                    //Atribuicao - Delimitador - Parenteses-------------------
+                        return new Token(TipoToken.PCProg, tokenLido);
+
+//Atribuicao - Delimitador - Parenteses-----------------------------------------
                     case "(":
-                        return new Token(TipoToken.AbrePar, c1);
-                        break;
+                        return new Token(TipoToken.AbrePar, tokenLido);
                     case ")":
-                        return new Token(TipoToken.FechaPar, c1);
-                        break;
+                        return new Token(TipoToken.FechaPar, tokenLido);
                     case ":=":
-                       
-                    return new Token(TipoToken.Atrib, auxiliar);
-
-                    break;
-                    
+                        return new Token(TipoToken.Atrib, tokenLido);
                     case ":":
-                    
-                    return new Token(TipoToken.Delim, c1);
+                        return new Token(TipoToken.Delim, tokenLido);
 
-                    break;
-                    //Operador booleano---------------------------------------
+//Operador booleano-------------------------------------------------------------
                     case "OU":
-                        
-                    return new Token(TipoToken.OpBoolOu, auxiliar);
-                       
-                    break;
+                        return new Token(TipoToken.OpBoolOu, tokenLido);
+
                     default:
-                        
-                    break;
+                        break;
                 }
                 return null;
         }
         return null;
     }
-}
