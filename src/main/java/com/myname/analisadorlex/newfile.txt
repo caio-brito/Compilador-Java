@@ -1,1 +1,1 @@
-:= ENTAO while(count menor ou igual a lenght)
+IMPRIMIR while(count menor ou igual a lenght)

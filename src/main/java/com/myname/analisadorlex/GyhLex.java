@@ -212,14 +212,14 @@ public class GyhLex {
                                 }
                             }//COLCOAR CONTROLE DE ERRO
                         } else if (c2.equals("M")) {
-
+                            
                             auxiliar = c1 + c2;
                             if (lpc.confere(linha, count)) {
 
-                                count++;
+                                count = count + 2;
                                 c1 = String.valueOf(lpc.LerProxChar(linha, count));
                                 c2 = String.valueOf(lpc.LerProxChar(linha, count + 1));
-
+                                
                                 if (c1.equals("P")) {//  Estado 21 do desenho
 
                                     if (c2.equals("R")) {//  Estado 22 do desenho
@@ -228,7 +228,7 @@ public class GyhLex {
 
                                         if (lpc.confere(linha, count)) {
 
-                                            count++;
+                                            count = count + 2;
                                             c1 = String.valueOf(lpc.LerProxChar(linha, count));
                                             c2 = String.valueOf(lpc.LerProxChar(linha, count + 1));
 
@@ -239,7 +239,7 @@ public class GyhLex {
                                                     auxiliar = auxiliar + c1 + c2;
                                                     if (lpc.confere(linha, count)) {
 
-                                                        count++;
+                                                        count = count + 2;
                                                         c1 = String.valueOf(lpc.LerProxChar(linha, count));
                                                         c2 = String.valueOf(lpc.LerProxChar(linha, count + 1));
 
