@@ -11,22 +11,11 @@ public class AnalisadorLex {
         String LinhaLida;
        
         LinhaLida = l.LerLinha();
-        Token s = identChar.geraToken(LinhaLida);
+        
+        //Gerar token de palavras usando funcao tokanizer
+        
+        Token s = identChar.geraToken(LinhaLida);//passar token por token com um while
         System.out.print(s);
-        
-        /*
-        while(teste != null){
-        
-        //Passar a string para uma classe e manipular para gerar tokens
-        //usar a classe GyhLex para manipular    
-            
-        teste = l.LerLinha();
-        
-        }
-        */
-        
+   
     }
-
-
-  
 }
