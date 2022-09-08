@@ -162,7 +162,49 @@ public class GyhLex {
                             }
                         }
                     }
-                } else //Atribuicao - Delimitador - Parenteses------------------- 
+                } else if (c1.equals("L")) {//  Estado  do desenho
+                    if (c2.equals("E")) {//  Estado  do desenho
+
+                        auxiliar = c1 + c2;
+                        if (lpc.confere(linha, count)) {
+
+                            count = count + 2;
+                            c1 = String.valueOf(lpc.LerProxChar(linha, count));
+                            if (c1.equals("R")) {//  Estado  do desenho
+                                auxiliar = auxiliar + c1;
+                                return new Token(TipoToken.PCLer, auxiliar);
+                            }
+                        }//COLCOCAR CONTROLE DE ERRO
+                    }
+                }else if (c1.equals("I")) {//  Estado  do desenho
+                    if (c2.equals("N")) {//  Estado  do desenho
+
+                        auxiliar = c1 + c2;
+                        if (lpc.confere(linha, count)) {
+
+                            count = count + 2;
+                            c1 = String.valueOf(lpc.LerProxChar(linha, count));
+                            if (c1.equals("I")) {//  Estado  do desenho
+                                auxiliar = auxiliar + c1;
+                                return new Token(TipoToken.PCIni, auxiliar);
+                            }
+                        }//COLCOAR CONTROLE DE ERRO
+                    }
+                }else if (c1.equals("D")) {//  Estado do desenho
+                    if (c2.equals("E")) {//  Estado  do desenho
+
+                        auxiliar = c1 + c2;
+                        if (lpc.confere(linha, count)) {
+
+                            count = count + 2;
+                            c1 = String.valueOf(lpc.LerProxChar(linha, count));
+                            if (c1.equals("C")) {//  Estado  do desenho
+                                auxiliar = auxiliar + c1;
+                                return new Token(TipoToken.PCDec, auxiliar);
+                            }
+                        }//COLCOAR CONTROLE DE ERRO
+                    }
+                  } else //Atribuicao - Delimitador - Parenteses------------------- 
                 if (c1.equals("(")) {
 
                     return new Token(TipoToken.AbrePar, c1);
@@ -184,7 +226,8 @@ public class GyhLex {
                         return new Token(TipoToken.Delim, c1);
 
                     }
-                } else if (c1.equals("O")) {
+                } else//Operador booleano---------------------------------------
+                    if (c1.equals("O")) {
 
                     if (c2.equals("U")) {
 
@@ -193,21 +236,8 @@ public class GyhLex {
                     } else {
                         //Tratar erro 
                     }
-                } else if (c1.equals("L")) {//  Estado  do desenho
-                    if (c2.equals("E")) {//  Estado  do desenho
-
-                        auxiliar = c1 + c2;
-                        if (lpc.confere(linha, count)) {
-
-                            count = count + 2;
-                            c1 = String.valueOf(lpc.LerProxChar(linha, count));
-                            if (c1.equals("R")) {//  Estado  do desenho
-                                auxiliar = auxiliar + c1;
-                                return new Token(TipoToken.PCLer, auxiliar);
-                            }
-                        }//COLCOCAR CONTROLE DE ERRO
-                    }
-                }
+                } 
+                
                 return null;
         }
         return null;
