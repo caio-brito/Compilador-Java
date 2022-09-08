@@ -1,1 +1,1 @@
-asdfafadagbqwfvaerfqawfcvae while(count menor ou igual a lenght)
+:= ENTAO while(count menor ou igual a lenght)

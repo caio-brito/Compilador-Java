@@ -185,11 +185,27 @@ public class GyhLex {
 
                     }
                 } else if (c1.equals("O")) {
+
                     if (c2.equals("U")) {
+
                         auxiliar = c1 + c2;
                         return new Token(TipoToken.OpBoolOu, auxiliar);
                     } else {
                         //Tratar erro 
+                    }
+                } else if (c1.equals("L")) {//  Estado  do desenho
+                    if (c2.equals("E")) {//  Estado  do desenho
+
+                        auxiliar = c1 + c2;
+                        if (lpc.confere(linha, count)) {
+
+                            count = count + 2;
+                            c1 = String.valueOf(lpc.LerProxChar(linha, count));
+                            if (c1.equals("R")) {//  Estado  do desenho
+                                auxiliar = auxiliar + c1;
+                                return new Token(TipoToken.PCLer, auxiliar);
+                            }
+                        }//COLCOCAR CONTROLE DE ERRO
                     }
                 }
                 return null;
