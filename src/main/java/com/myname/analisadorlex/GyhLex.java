@@ -19,28 +19,29 @@ public class GyhLex {
         // while (estado != -1) {
         switch (estado) {
 
-            case 1://Estado 1 do automato              
-
-                //Operadores Aritimeticos---------------------------------------
-                if (c1.equals("*")) {//Estado 2 do desenho
-
+            case 1: //Estado 1 do automato
+            //Operadores Aritimeticos---------------------------------------
+            switch (c1) {
+                case "*":
+                    //Estado 2 do desenho
+                    
                     return new Token(TipoToken.OpAritMult, c1);
-
-                } else if (c1.equals("/")) {// Estado 3 do desenho
+                case "/":
+                    // Estado 3 do desenho
 
                     return new Token(TipoToken.OpAritDiv, c1);
-
-                } else if (c1.equals("+")) {// Estado 4 do desenho
+                case "+":
+                    // Estado 4 do desenho
 
                     return new Token(TipoToken.OpAritSoma, c1);
-
-                } else if (c1.equals("-")) {// Estado 5 do desenho
+                case "-":
+                    // Estado 5 do desenho
 
                     return new Token(TipoToken.OpAritSub, c1);
-
-                } else //Operadores Relacionais---------------------------------
-                //
-                if (c1.equals("<")) {//        Estado 6 do desenho
+            //Operadores Relacionais---------------------------------
+            //
+                case "<":
+                    //        Estado 6 do desenho
 
                     if (c2.equals("=")) {//    Estado 7 do desenho
 
@@ -52,8 +53,9 @@ public class GyhLex {
                         return new Token(TipoToken.OpRelMenor, c1);
 
                     }
-                } else if (c1.equals(">")) {//Estado 9 do desenho
-
+                case ">":
+                    //Estado 9 do desenho
+                    
                     if (c2.equals("=")) {//   Estado 10 do desenho
 
                         auxiliar = c1 + c2;
@@ -64,8 +66,9 @@ public class GyhLex {
                         return new Token(TipoToken.OpRelMaior, c1);
 
                     }
-                } else if (c1.equals("=")) {//Estado 12 do desenho
-
+                case "=":
+                    //Estado 12 do desenho
+                    
                     if (c2.equals("=")) {//   Estado 13 do desenho
 
                         auxiliar = c1 + c2;
@@ -74,16 +77,20 @@ public class GyhLex {
 
                         //TRATAR ERRO, POIS NAO VAI PERTENCER A LINGUAGEM
                     }
-                } else if (c1.equals("!")) {//Estado 14 do desenho
-
+                    break;
+                case "!":
+                    //Estado 14 do desenho
+                    
                     if (c2.equals("=")) {//  Estado 15 do desenho
 
                         auxiliar = c1 + c2;
                         return new Token(TipoToken.OpRelDif, auxiliar);
                     }
-                } else//Palavra chave------------------------------------------- 
-                //
-                if (c1.equals("F")) {//  Estado 16 do desenho
+                    break;
+            //Palavra chave-------------------------------------------
+            //
+                case "F":
+                    //  Estado 16 do desenho
                     if (c2.equals("I")) {//  Estado 17 do desenho
 
                         auxiliar = c1 + c2;
@@ -97,8 +104,10 @@ public class GyhLex {
                             }
                         }//COLCOAR CONTROLE DE ERRO
                     }
-                } else if (c1.equals("R")) {//  Estado 19 do desenho
-
+                    break;
+                case "R":
+                    //  Estado 19 do desenho
+                    
                     if (c2.equals("E")) {//  Estado 20 do desenho
 
                         auxiliar = c1 + c2;
@@ -120,8 +129,8 @@ public class GyhLex {
                             //Printar erro na formacao da palavra chave REAL
                         }
                     }
-                } else if (c1.equals("E")) {
-
+                    break;
+                case "E":
                     if (c2.compareTo("N") != 0) {
 
                         return new Token(TipoToken.OpBoolE, c1);
@@ -162,7 +171,9 @@ public class GyhLex {
                             }
                         }
                     }
-                } else if (c1.equals("L")) {//  Estado  do desenho
+                    break;
+                case "L":
+                    //  Estado  do desenho
                     if (c2.equals("E")) {//  Estado  do desenho
 
                         auxiliar = c1 + c2;
@@ -176,7 +187,9 @@ public class GyhLex {
                             }
                         }//COLCOCAR CONTROLE DE ERRO
                     }
-                }else if (c1.equals("I")) {//  Estado  do desenho
+                    break;
+                case "I":
+                    //  Estado  do desenho
                     if (c2.equals("N")) {//  Estado  do desenho
 
                         auxiliar = c1 + c2;
@@ -184,13 +197,24 @@ public class GyhLex {
 
                             count = count + 2;
                             c1 = String.valueOf(lpc.LerProxChar(linha, count));
-                            if (c1.equals("I")) {//  Estado  do desenho
-                                auxiliar = auxiliar + c1;
-                                return new Token(TipoToken.PCIni, auxiliar);
+                            switch (c1) {
+                                case "I":
+                                    //  Estado  do desenho
+                                    
+                                    auxiliar = auxiliar + c1;
+                                    return new Token(TipoToken.PCIni, auxiliar);
+                                case "T":
+                                    auxiliar = auxiliar + c1;
+                                    return new Token(TipoToken.PCInt, auxiliar);
+                                    //Colocar controle de erro
+                                default:
+                                    break;
                             }
                         }//COLCOAR CONTROLE DE ERRO
                     }
-                }else if (c1.equals("D")) {//  Estado do desenho
+                    break;
+                case "D":
+                    //  Estado do desenho
                     if (c2.equals("E")) {//  Estado  do desenho
 
                         auxiliar = c1 + c2;
@@ -204,17 +228,13 @@ public class GyhLex {
                             }
                         }//COLCOAR CONTROLE DE ERRO
                     }
-                  } else //Atribuicao - Delimitador - Parenteses------------------- 
-                if (c1.equals("(")) {
-
+                    break;
+            //Atribuicao - Delimitador - Parenteses-------------------
+                case "(":
                     return new Token(TipoToken.AbrePar, c1);
-
-                } else if (c1.equals(")")) {
-
+                case ")":
                     return new Token(TipoToken.FechaPar, c1);
-
-                } else if (c1.equals(":")) {
-
+                case ":":
                     if (c2.equals("=")) {
 
                         auxiliar = c1 + c2;
@@ -226,9 +246,8 @@ public class GyhLex {
                         return new Token(TipoToken.Delim, c1);
 
                     }
-                } else//Operador booleano---------------------------------------
-                    if (c1.equals("O")) {
-
+            //Operador booleano---------------------------------------
+                case "O":
                     if (c2.equals("U")) {
 
                         auxiliar = c1 + c2;
@@ -236,9 +255,13 @@ public class GyhLex {
                     } else {
                         //Tratar erro 
                     }
-                } 
+                    break; 
+                default:
+                    break;
+            }
                 
                 return null;
+
         }
         return null;
     }
