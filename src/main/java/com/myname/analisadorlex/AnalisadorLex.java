@@ -71,6 +71,9 @@ public class AnalisadorLex {
 
                         }
                     }
+                    contadorLinhaS = String.valueOf(contadorLinha);
+                    s = identChar.geraToken(token1, contadorLinhaS);
+                    System.out.println(s);
                 }
             }
             LinhaLida = l.LerLinha();
