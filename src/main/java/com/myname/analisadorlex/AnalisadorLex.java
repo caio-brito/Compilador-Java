@@ -13,27 +13,64 @@ public class AnalisadorLex {
 
         Leitura l = new Leitura(args[0]);
         GyhLex identChar = new GyhLex();
-        String LinhaLida, teste,contadorLinhaS;
+        String LinhaLida, token1, token2, contadorLinhaS;
         Token s;
         int contadorLinha = 0;
 
         LinhaLida = l.LerLinha();
         contadorLinha++;
+
         while (LinhaLida != null) {
 
             StringTokenizer st = new StringTokenizer(LinhaLida, " :#()<=>+-", true);
 
             while (st.hasMoreTokens()) {
 
-                teste = st.nextToken();
-                
-                if (teste.equals("#")) {
+                token1 = st.nextToken();
+
+                if (token1.equals("#")) {
                     break;
-                } else if (teste.equals(" ") == false) {
-                    
-                    contadorLinhaS = String.valueOf(contadorLinha);
-                    s = identChar.geraToken(teste, contadorLinhaS);
-                    System.out.println(s);
+                } else if (token1.equals(" ") == false) {
+
+                    if (st.hasMoreTokens()) {
+                        token2 = st.nextToken();
+
+                        if (token1.equals(":") && token2.equals("=")) {
+
+                            token1 = token1 + token2;
+                            contadorLinhaS = String.valueOf(contadorLinha);
+                            s = identChar.geraToken(token1, contadorLinhaS);
+                            System.out.println(s);
+                        } else if (token1.equals("<") && token2.equals("=")) {
+                            token1 = token1 + token2;
+                            contadorLinhaS = String.valueOf(contadorLinha);
+                            s = identChar.geraToken(token1, contadorLinhaS);
+                            System.out.println(s);
+                        } else if (token1.equals("=") && token2.equals("=")) {
+                            token1 = token1 + token2;
+                            contadorLinhaS = String.valueOf(contadorLinha);
+                            s = identChar.geraToken(token1, contadorLinhaS);
+                            System.out.println(s);
+                        } else if (token1.equals(">") && token2.equals("=")) {
+                            token1 = token1 + token2;
+                            contadorLinhaS = String.valueOf(contadorLinha);
+                            s = identChar.geraToken(token1, contadorLinhaS);
+                            System.out.println(s);
+                        } else if (token1.equals("!") && token2.equals("=")) {
+                            token1 = token1 + token2;
+                            contadorLinhaS = String.valueOf(contadorLinha);
+                            s = identChar.geraToken(token1, contadorLinhaS);
+                            System.out.println(s);
+                        } else {
+
+                            contadorLinhaS = String.valueOf(contadorLinha);
+                            s = identChar.geraToken(token1, contadorLinhaS);
+                            System.out.println(s);
+                            s = identChar.geraToken(token2, contadorLinhaS);
+                            System.out.println(s);
+
+                        }
+                    }
                 }
             }
             LinhaLida = l.LerLinha();
