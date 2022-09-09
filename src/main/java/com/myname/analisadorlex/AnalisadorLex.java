@@ -14,21 +14,20 @@ public class AnalisadorLex {
 
         LinhaLida = l.LerLinha();
 
-        //Gerar token de palavras usando funcao tokanizer
         while (LinhaLida != null) {
 
-            StringTokenizer st = new StringTokenizer(LinhaLida, " :#()<=>+-"+"==", true);
+            StringTokenizer st = new StringTokenizer(LinhaLida, " :#()<=>+-", true);
 
             while (st.hasMoreTokens()) {
 
                 teste = st.nextToken();
-                
-                if(teste.equals("#")){
-                    break;
-                }
-                s = identChar.geraToken(teste);
-                System.out.println(s);
 
+                if (teste.equals("#")) {
+                    break;
+                } else if (teste.equals(" ") == false) {
+                    s = identChar.geraToken(teste);
+                    System.out.println(s);
+                }
             }
             LinhaLida = l.LerLinha();
         }
