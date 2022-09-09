@@ -5,9 +5,9 @@ import static java.lang.Character.isLowerCase;
 
 public class GyhLex {
 
-    public Token geraToken(String tokenLido) {
+    public Token geraToken(String tokenLido, String Linha) {
 
-        if (isLowerCase(tokenLido.charAt(0))) {
+        if (isLowerCase(tokenLido.charAt(0)) ) {
             return new Token(TipoToken.Var, tokenLido);
         } else if (isDigit(tokenLido.charAt(0))) {
             if (tokenLido.contains(".")) {
@@ -87,9 +87,7 @@ public class GyhLex {
                 return new Token(TipoToken.OpBoolOu, tokenLido);
 
             default:
-
-                break;
+                return new Token(TipoToken.ErroNaLinha, Linha);
         }
-        return null;
     }
 }

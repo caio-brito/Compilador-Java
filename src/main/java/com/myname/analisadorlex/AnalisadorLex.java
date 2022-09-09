@@ -1,3 +1,7 @@
+/*
+*Caio Vinicius Oliveira Brito RA:2150905
+*Vitor Augusto Ozanick        RA:2152401 
+ */
 package com.myname.analisadorlex;
 
 import java.io.IOException;
@@ -9,11 +13,12 @@ public class AnalisadorLex {
 
         Leitura l = new Leitura(args[0]);
         GyhLex identChar = new GyhLex();
-        String LinhaLida, teste;
+        String LinhaLida, teste,contadorLinhaS;
         Token s;
+        int contadorLinha = 0;
 
         LinhaLida = l.LerLinha();
-
+        contadorLinha++;
         while (LinhaLida != null) {
 
             StringTokenizer st = new StringTokenizer(LinhaLida, " :#()<=>+-", true);
@@ -21,15 +26,18 @@ public class AnalisadorLex {
             while (st.hasMoreTokens()) {
 
                 teste = st.nextToken();
-
+                
                 if (teste.equals("#")) {
                     break;
                 } else if (teste.equals(" ") == false) {
-                    s = identChar.geraToken(teste);
+                    
+                    contadorLinhaS = String.valueOf(contadorLinha);
+                    s = identChar.geraToken(teste, contadorLinhaS);
                     System.out.println(s);
                 }
             }
             LinhaLida = l.LerLinha();
+            contadorLinha++;
         }
     }
 }

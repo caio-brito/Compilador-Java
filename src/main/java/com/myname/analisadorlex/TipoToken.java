@@ -12,5 +12,6 @@ public enum TipoToken {
 	 NumInt,
 	 NumReal,
 	 Cadeia,
+         ErroNaLinha,
 	 Fim
 }

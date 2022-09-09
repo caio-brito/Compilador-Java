@@ -6,6 +6,7 @@ public class Token {
    public String lexema;
    
    public Token(TipoToken sigcla, String lexema) {
+       
 	   this.sigla = sigcla;
 	   this.lexema =lexema;
    }
@@ -13,6 +14,7 @@ public class Token {
    @Override
    public String toString() {
        
+           
            return "< "+sigla+", "+lexema+" >";
    }
 }
