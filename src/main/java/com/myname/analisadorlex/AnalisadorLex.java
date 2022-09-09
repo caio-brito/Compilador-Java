@@ -1,7 +1,9 @@
+
 /*
 *Caio Vinicius Oliveira Brito RA:2150905
 *Vitor Augusto Ozanick        RA:2152401 
  */
+
 package com.myname.analisadorlex;
 
 import java.io.IOException;
@@ -10,74 +12,111 @@ import java.util.StringTokenizer;
 public class AnalisadorLex {
 
     public static void main(String[] args) throws IOException {
-
+        
         Leitura l = new Leitura(args[0]);
         GyhLex identChar = new GyhLex();
-        String LinhaLida, token1, token2, contadorLinhaS;
+        String LinhaLida, teste, teste1, junta;
         Token s;
-        int contadorLinha = 0;
-
         LinhaLida = l.LerLinha();
-        contadorLinha++;
+
+        boolean entrou = false;
 
         while (LinhaLida != null) {
 
-            StringTokenizer st = new StringTokenizer(LinhaLida, " :#()<=>+-", true);
+            StringTokenizer st = new StringTokenizer(LinhaLida, " :#()<=>+-==@^&|~!", true);
 
             while (st.hasMoreTokens()) {
 
-                token1 = st.nextToken();
+                entrou = false;
+                teste = st.nextToken();
+                if (teste.equals(" ") == false) {
 
-                if (token1.equals("#")) {
-                    break;
-                } else if (token1.equals(" ") == false) {
-
-                    if (st.hasMoreTokens()) {
-                        token2 = st.nextToken();
-
-                        if (token1.equals(":") && token2.equals("=")) {
-
-                            token1 = token1 + token2;
-                            contadorLinhaS = String.valueOf(contadorLinha);
-                            s = identChar.geraToken(token1, contadorLinhaS);
+                    if (teste.equals("#")) {
+                        break;
+                    }
+                    if (teste.equals(">")) {
+                        teste1 = st.nextToken();
+                        if (teste1.equals("=")) {
+                            junta = teste + teste1;
+                            s = identChar.geraToken(junta);
                             System.out.println(s);
-                        } else if (token1.equals("<") && token2.equals("=")) {
-                            token1 = token1 + token2;
-                            contadorLinhaS = String.valueOf(contadorLinha);
-                            s = identChar.geraToken(token1, contadorLinhaS);
-                            System.out.println(s);
-                        } else if (token1.equals("=") && token2.equals("=")) {
-                            token1 = token1 + token2;
-                            contadorLinhaS = String.valueOf(contadorLinha);
-                            s = identChar.geraToken(token1, contadorLinhaS);
-                            System.out.println(s);
-                        } else if (token1.equals(">") && token2.equals("=")) {
-                            token1 = token1 + token2;
-                            contadorLinhaS = String.valueOf(contadorLinha);
-                            s = identChar.geraToken(token1, contadorLinhaS);
-                            System.out.println(s);
-                        } else if (token1.equals("!") && token2.equals("=")) {
-                            token1 = token1 + token2;
-                            contadorLinhaS = String.valueOf(contadorLinha);
-                            s = identChar.geraToken(token1, contadorLinhaS);
-                            System.out.println(s);
+                            entrou = true;
                         } else {
-
-                            contadorLinhaS = String.valueOf(contadorLinha);
-                            s = identChar.geraToken(token1, contadorLinhaS);
+                        	if (teste1.equals(" ") == false) {
+                            s = identChar.geraToken(teste);
                             System.out.println(s);
-                            s = identChar.geraToken(token2, contadorLinhaS);
-                            System.out.println(s);
-
+                            teste = teste1;
+                        	}
                         }
                     }
-                    contadorLinhaS = String.valueOf(contadorLinha);
-                    s = identChar.geraToken(token1, contadorLinhaS);
-                    System.out.println(s);
+                    if (teste.equals("<")) {
+                        teste1 = st.nextToken();
+                        if (teste1.equals("=")) {
+                            junta = teste + teste1;
+                            s = identChar.geraToken(junta);
+                            System.out.println(s);
+                            entrou = true;
+                        } else {
+                        	if (teste1.equals(" ") == false) {
+                            s = identChar.geraToken(teste);
+                            System.out.println(s);
+                            teste = teste1;               
+                        	}
+                        }
+                    }
+                    if (teste.equals("=")) {
+                        teste1 = st.nextToken();
+                        if (teste1.equals("=")) {
+                            junta = teste + teste1;
+                            s = identChar.geraToken(junta);
+                            System.out.println(s);
+                            entrou = true;
+                        } else {
+                        	if (teste1.equals(" ") == false) {
+                            s = identChar.geraToken(teste);
+                            System.out.println(s);
+                            teste = teste1;
+                        	}
+                        }
+                    }
+                    if (teste.equals("!")) {
+                        teste1 = st.nextToken();
+                        if (teste1.equals("=")) {
+                            junta = teste + teste1;
+                            s = identChar.geraToken(junta);
+                            System.out.println(s);
+                            entrou = true;
+                        } else {
+                        	if (teste1.equals(" ") == false) {
+                            s = identChar.geraToken(teste);
+                            System.out.println(s);
+                            teste = teste1;
+                        	}
+                        }
+                    }
+                    if (teste.equals(":")) {// :
+                        teste1 = st.nextToken();// =
+                        if (teste1.equals("=")) {// SE FOR =
+                            junta = teste + teste1;// :=
+                            s = identChar.geraToken(junta);
+                            System.out.println(s);
+                            entrou = true;
+                        } else {
+                        	if (teste1.equals(" ") == false) {
+                            s = identChar.geraToken(teste);// :
+                            System.out.println(s);
+                            teste = teste1;// TESTE = '='
+                        	}
+                        }
+                    }
+
+                    if (entrou == false) {
+                        s = identChar.geraToken(teste);
+                        System.out.println(s);
+                    }
                 }
             }
             LinhaLida = l.LerLinha();
-            contadorLinha++;
         }
     }
 }

@@ -5,7 +5,7 @@ import static java.lang.Character.isLowerCase;
 
 public class GyhLex {
 
-    public Token geraToken(String tokenLido, String Linha) {
+    public Token geraToken(String tokenLido) {
 
         if (isLowerCase(tokenLido.charAt(0))) {
             return new Token(TipoToken.Var, tokenLido);
@@ -15,8 +15,8 @@ public class GyhLex {
             } else {
                 return new Token(TipoToken.NumInt, tokenLido);
             }
-        }else if(tokenLido.charAt(0) == '\"' && tokenLido.charAt(tokenLido.length()-1) == '\"'){
-                return new Token(TipoToken.Cadeia, tokenLido);
+        } else if (tokenLido.charAt(0) == '\"' && tokenLido.charAt(tokenLido.length() - 1) == '\"') {
+            return new Token(TipoToken.Cadeia, tokenLido);
         }
 
         switch (tokenLido) {
@@ -43,13 +43,15 @@ public class GyhLex {
                 return new Token(TipoToken.OpRelMaior, tokenLido);
             case "=":
                 return new Token(TipoToken.OpRelIgual, tokenLido);
+            case "==":
+                return new Token(TipoToken.OpRelIgual, tokenLido);
             case "!=":
                 return new Token(TipoToken.OpRelDif, tokenLido);
 
 //Palavra chave-----------------------------------------------------------------
             case "FIM":
                 return new Token(TipoToken.PCFim, tokenLido);
-            case "REAl":
+            case "REAL":
                 return new Token(TipoToken.PCReal, tokenLido);
             case "ENTAO":
                 return new Token(TipoToken.PCEntao, tokenLido);
@@ -89,7 +91,7 @@ public class GyhLex {
                 return new Token(TipoToken.OpBoolOu, tokenLido);
 
             default:
-                return new Token(TipoToken.ErroNaLinha, Linha);
+                return new Token(TipoToken.ErroNaLinha, tokenLido);
         }
     }
 }
