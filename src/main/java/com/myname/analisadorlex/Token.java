@@ -13,7 +13,6 @@ public class Token {
    @Override
    public String toString() {
        
-                
-	   return "< "+sigla+", "+lexema+" >";
+           return "< "+sigla+", "+lexema+" >";
    }
 }
