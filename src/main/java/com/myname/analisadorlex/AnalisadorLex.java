@@ -17,7 +17,7 @@ public class AnalisadorLex {
         //Gerar token de palavras usando funcao tokanizer
         while (LinhaLida != null) {
 
-            StringTokenizer st = new StringTokenizer(LinhaLida, " :#", true);
+            StringTokenizer st = new StringTokenizer(LinhaLida, " :#()<=>+-"+"==", true);
 
             while (st.hasMoreTokens()) {
 

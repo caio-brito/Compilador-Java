@@ -1,15 +1,19 @@
 package com.myname.analisadorlex;
+import static java.lang.Character.isLowerCase;
 
 public class GyhLex {
 
     public Token geraToken(String tokenLido) {
-        
-        
 
+        
+        if(isLowerCase(tokenLido.charAt(0))){
+            return new Token(TipoToken.Var, tokenLido);
+        }
+        
         switch (tokenLido) {
-                
+
+            
 //Operadores Aritimeticos-------------------------------------------------------                
-                
             case "*":
                 return new Token(TipoToken.OpAritMult, tokenLido);
             case "/":
@@ -74,8 +78,9 @@ public class GyhLex {
                 return new Token(TipoToken.OpBoolE, tokenLido);
             case "OU":
                 return new Token(TipoToken.OpBoolOu, tokenLido);
-            
+                
             default:
+
                 break;
         }
         return null;

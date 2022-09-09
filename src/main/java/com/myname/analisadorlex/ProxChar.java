@@ -7,7 +7,7 @@ public class ProxChar {
         c = Linha.charAt(indi);
         return c;
     }
-
+     
     public boolean confere(String str, int contador) {
         return str.length() > contador + 2; 
    }
