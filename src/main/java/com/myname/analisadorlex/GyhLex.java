@@ -7,7 +7,7 @@ public class GyhLex {
 
     public Token geraToken(String tokenLido, String Linha) {
 
-        if (isLowerCase(tokenLido.charAt(0)) || tokenLido.charAt(0) == '\"') {
+        if (isLowerCase(tokenLido.charAt(0))) {
             return new Token(TipoToken.Var, tokenLido);
         } else if (isDigit(tokenLido.charAt(0))) {
             if (tokenLido.contains(".")) {
@@ -15,6 +15,8 @@ public class GyhLex {
             } else {
                 return new Token(TipoToken.NumInt, tokenLido);
             }
+        }else if(tokenLido.charAt(0) == '\"' && tokenLido.charAt(tokenLido.length()-1) == '\"'){
+                return new Token(TipoToken.Cadeia, tokenLido);
         }
 
         switch (tokenLido) {
