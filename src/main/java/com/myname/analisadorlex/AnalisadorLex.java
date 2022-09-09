@@ -17,8 +17,9 @@ public class AnalisadorLex {
         GyhLex identChar = new GyhLex();
         String LinhaLida, teste, teste1, junta;
         Token s;
+        int counter = 0;
         LinhaLida = l.LerLinha();
-
+        counter++;
         boolean entrou = false;
 
         while (LinhaLida != null) {
@@ -38,12 +39,12 @@ public class AnalisadorLex {
                         teste1 = st.nextToken();
                         if (teste1.equals("=")) {
                             junta = teste + teste1;
-                            s = identChar.geraToken(junta);
+                            s = identChar.geraToken(junta , counter);
                             System.out.println(s);
                             entrou = true;
                         } else {
                         	if (teste1.equals(" ") == false) {
-                            s = identChar.geraToken(teste);
+                            s = identChar.geraToken(teste , counter);
                             System.out.println(s);
                             teste = teste1;
                         	}
@@ -53,12 +54,12 @@ public class AnalisadorLex {
                         teste1 = st.nextToken();
                         if (teste1.equals("=")) {
                             junta = teste + teste1;
-                            s = identChar.geraToken(junta);
+                            s = identChar.geraToken(junta , counter);
                             System.out.println(s);
                             entrou = true;
                         } else {
                         	if (teste1.equals(" ") == false) {
-                            s = identChar.geraToken(teste);
+                            s = identChar.geraToken(teste , counter);
                             System.out.println(s);
                             teste = teste1;               
                         	}
@@ -68,12 +69,12 @@ public class AnalisadorLex {
                         teste1 = st.nextToken();
                         if (teste1.equals("=")) {
                             junta = teste + teste1;
-                            s = identChar.geraToken(junta);
+                            s = identChar.geraToken(junta , counter);
                             System.out.println(s);
                             entrou = true;
                         } else {
                         	if (teste1.equals(" ") == false) {
-                            s = identChar.geraToken(teste);
+                            s = identChar.geraToken(teste , counter);
                             System.out.println(s);
                             teste = teste1;
                         	}
@@ -83,12 +84,12 @@ public class AnalisadorLex {
                         teste1 = st.nextToken();
                         if (teste1.equals("=")) {
                             junta = teste + teste1;
-                            s = identChar.geraToken(junta);
+                            s = identChar.geraToken(junta , counter);
                             System.out.println(s);
                             entrou = true;
                         } else {
                         	if (teste1.equals(" ") == false) {
-                            s = identChar.geraToken(teste);
+                            s = identChar.geraToken(teste , counter);
                             System.out.println(s);
                             teste = teste1;
                         	}
@@ -98,12 +99,12 @@ public class AnalisadorLex {
                         teste1 = st.nextToken();// =
                         if (teste1.equals("=")) {// SE FOR =
                             junta = teste + teste1;// :=
-                            s = identChar.geraToken(junta);
+                            s = identChar.geraToken(junta , counter);
                             System.out.println(s);
                             entrou = true;
                         } else {
                         	if (teste1.equals(" ") == false) {
-                            s = identChar.geraToken(teste);// :
+                            s = identChar.geraToken(teste , counter);// :
                             System.out.println(s);
                             teste = teste1;// TESTE = '='
                         	}
@@ -111,12 +112,13 @@ public class AnalisadorLex {
                     }
 
                     if (entrou == false) {
-                        s = identChar.geraToken(teste);
+                        s = identChar.geraToken(teste , counter);
                         System.out.println(s);
                     }
                 }
             }
             LinhaLida = l.LerLinha();
+            counter++;
         }
     }
 }
