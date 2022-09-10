@@ -14,7 +14,7 @@ public class AnalisadorLex {
 
         Leitura l = new Leitura(args[0]);
         GyhLex identChar = new GyhLex();
-        String LinhaLida, teste, teste1, junta;
+        String LinhaLida, token1, token2, juntar;
         Token s;//
         int counter = 0;//numero de linhas lidas
         LinhaLida = l.LerLinha();//recebe a linha lida em leitura
@@ -28,109 +28,109 @@ public class AnalisadorLex {
             while (st.hasMoreTokens()) {//garante que o loop nao tentara ler um token extrapolando a string
 
                 entrou = false;
-                teste = st.nextToken();
-                if (teste.equals(" ") == false) {//excluir espacos
+                token1 = st.nextToken();
+                if (token1.equals(" ") == false) {//excluir espacos
 
-                    if (teste.equals("#")) {//excluir comentarios
+                    if (token1.equals("#")) {//excluir comentarios
 
                         break;
                     }
-                    if (teste.equals(">")) {//verifica condicao adversa de >= para gerar token
-                        teste1 = st.nextToken();
-                        if (teste1.equals("=")) {
-                            junta = teste + teste1;
-                            s = identChar.geraToken(junta, counter);
+                    if (token1.equals(">")) {//verifica condicao adversa de >= para gerar token
+                        token2 = st.nextToken();
+                        if (token2.equals("=")) {
+                            juntar = token1 + token2;
+                            s = identChar.geraToken(juntar, counter);
                             System.out.print(s);
                             entrou = true;
                         } else {
-                            if (teste1.equals(" ") == false) {//gera > se o proximo token diff de "=" 
-                                s = identChar.geraToken(teste, counter);
+                            if (token2.equals(" ") == false) {//gera > se o proximo token diff de "=" 
+                                s = identChar.geraToken(token1, counter);
                                 System.out.print(s);
-                                teste = teste1;
+                                token1 = token2;
                             }
                         }
                     }
-                    if (teste.equals("<")) {//verifica condicao adversa de <= para gerar token
-                        teste1 = st.nextToken();
-                        if (teste1.equals("=")) {
-                            junta = teste + teste1;
-                            s = identChar.geraToken(junta, counter);
+                    if (token1.equals("<")) {//verifica condicao adversa de <= para gerar token
+                        token2 = st.nextToken();
+                        if (token2.equals("=")) {
+                            juntar = token1 + token2;
+                            s = identChar.geraToken(juntar, counter);
                             System.out.print(s);
                             entrou = true;
                         } else {
-                            if (teste1.equals(" ") == false) {//gera < se o proximo token diff de "="
-                                s = identChar.geraToken(teste, counter);
+                            if (token2.equals(" ") == false) {//gera < se o proximo token diff de "="
+                                s = identChar.geraToken(token1, counter);
                                 System.out.print(s);
-                                teste = teste1;
+                                token1 = token2;
                             }
                         }
                     }
-                    if (teste.equals("=")) {//verifica condicao adversa de == para gerar token
-                        teste1 = st.nextToken();
-                        if (teste1.equals("=")) {
-                            junta = teste + teste1;
-                            s = identChar.geraToken(junta, counter);
+                    if (token1.equals("=")) {//verifica condicao adversa de == para gerar token
+                        token2 = st.nextToken();
+                        if (token2.equals("=")) {
+                            juntar = token1 + token2;
+                            s = identChar.geraToken(juntar, counter);
                             System.out.print(s);
                             entrou = true;
                         } else {
-                            if (teste1.equals(" ") == false) {//gera = se o proximo token diff de "="
-                                s = identChar.geraToken(teste, counter);
+                            if (token2.equals(" ") == false) {//gera = se o proximo token diff de "="
+                                s = identChar.geraToken(token1, counter);
                                 System.out.print(s);
-                                teste = teste1;
+                                token1 = token2;
                             }
                         }
                     }
-                    if (teste.equals("!")) {//verifica condicao adversa de != para gerar token
-                        teste1 = st.nextToken();
-                        if (teste1.equals("=")) {
-                            junta = teste + teste1;
-                            s = identChar.geraToken(junta, counter);
+                    if (token1.equals("!")) {//verifica condicao adversa de != para gerar token
+                        token2 = st.nextToken();
+                        if (token2.equals("=")) {
+                            juntar = token1 + token2;
+                            s = identChar.geraToken(juntar, counter);
                             System.out.print(s);
                             entrou = true;
                         } else {
                             
-                            if (teste1.equals(" ") == false) {//gera ! se o proximo token diff de "="
-                                s = identChar.geraToken(teste, counter);
+                            if (token2.equals(" ") == false) {//gera ! se o proximo token diff de "="
+                                s = identChar.geraToken(token1, counter);
                                 System.out.print(s);
-                                teste = teste1;
-                            }else if (teste1.equals(" ") == true){//ignora o token espaco pra nao gerar falso erro
-                                s = identChar.geraToken(teste, counter);
+                                token1 = token2;
+                            }else if (token2.equals(" ") == true){//ignora o token espaco pra nao gerar falso erro
+                                s = identChar.geraToken(token1, counter);
                                 System.out.print(s);
                                 entrou = true;
                             }
                         }
                     }
-                    if (teste.equals(":")) {//verifica condicao adversa de != para gerar token
-                        teste1 = st.nextToken();
-                        if (teste1.equals("=")) {
-                            junta = teste + teste1;
-                            s = identChar.geraToken(junta, counter);
+                    if (token1.equals(":")) {//verifica condicao adversa de != para gerar token
+                        token2 = st.nextToken();
+                        if (token2.equals("=")) {
+                            juntar = token1 + token2;
+                            s = identChar.geraToken(juntar, counter);
                             System.out.print(s);
                             entrou = true;
                         } else {
-                            if (teste1.equals(" ") == false) {//gera : se o proximo token diff de "="
-                                s = identChar.geraToken(teste, counter);
+                            if (token2.equals(" ") == false) {//gera : se o proximo token diff de "="
+                                s = identChar.geraToken(token1, counter);
                                 System.out.print(s);
-                                teste = teste1;
+                                token1 = token2;
                             }
                         }
                     }
-                    if (teste.equals("\"") && st.hasMoreTokens()) {//verifica sequências de caracteres envolta por aspas, evitando erros por delimitadores detro da string
+                    if (token1.equals("\"") && st.hasMoreTokens()) {//verifica sequências de caracteres envolta por aspas, evitando erros por delimitadores detro da string
 
-                        teste1 = st.nextToken();
-                        junta = teste + teste1;
-                        while (teste1.equals("\"") == false && st.hasMoreTokens()) {//concatena os tokens
+                        token2 = st.nextToken();
+                        juntar = token1 + token2;
+                        while (token2.equals("\"") == false && st.hasMoreTokens()) {//concatena os tokens
 
-                            teste1 = st.nextToken();
-                            junta = junta + teste1;
+                            token2 = st.nextToken();
+                            juntar = juntar + token2;
                         }
-                        s = identChar.geraToken(junta, counter);
+                        s = identChar.geraToken(juntar, counter);
                         System.out.print(s);
                         entrou = true;
                     }
 
                     if (entrou == false) {//se nao houve uso de ambas os tokens pegos, printa token que sobrou
-                        s = identChar.geraToken(teste, counter);
+                        s = identChar.geraToken(token1, counter);
                         System.out.print(s);
                     }
                 }
