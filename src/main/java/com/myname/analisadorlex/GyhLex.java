@@ -1,5 +1,6 @@
 package com.myname.analisadorlex;
 
+
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isLowerCase;
 
@@ -7,19 +8,19 @@ public class GyhLex {
 
     public Token geraToken(String tokenLido, int Linha) {
 
-        if (isLowerCase(tokenLido.charAt(0))) {
+        if (isLowerCase(tokenLido.charAt(0))) {//Verifica se primeiro caractere é minusculo p/ gerar var
             return new Token(TipoToken.Var, tokenLido);
-        } else if (isDigit(tokenLido.charAt(0))) {
-            if (tokenLido.contains(".")) {
+        } else if (isDigit(tokenLido.charAt(0))) { 
+            if (tokenLido.contains(".")) {//Verifica presença de '.' para gerar numero real ou inteiro
                 return new Token(TipoToken.NumReal, tokenLido);
             } else {
                 return new Token(TipoToken.NumInt, tokenLido);
             }
-        } else if (tokenLido.charAt(0) == '\"' && tokenLido.charAt(tokenLido.length() - 1) == '\"') {
+        } else if (tokenLido.charAt(0) == '\"' && tokenLido.charAt(tokenLido.length() - 1) == '\"') {//Valida uma cadeia quando a string esta entre aspas
             return new Token(TipoToken.Cadeia, tokenLido);
         }
 
-        switch (tokenLido) {
+        switch (tokenLido) {//seleciona qual formato de token retornar de acordo com as regras GYH 
 
 //Operadores Aritimeticos-------------------------------------------------------                
             case "*":
@@ -90,9 +91,9 @@ public class GyhLex {
             case "OU":
                 return new Token(TipoToken.OpBoolOu, tokenLido);
 
-            default:
+            default: //Caso de erro Lexíco, retorna um token de erro e a linha onde se encontra 
                 
-                String sLinha =String.valueOf(Linha);
+                String sLinha =String.valueOf(Linha); 
                 return new Token(TipoToken.ErroNaLinha, sLinha);
         }
     }
