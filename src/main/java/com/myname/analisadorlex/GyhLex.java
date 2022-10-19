@@ -5,13 +5,14 @@ import static java.lang.Character.isDigit;
 import static java.lang.Character.isLowerCase;
 
 public class GyhLex {
-
+    
     public Token geraToken(String tokenLido, int Linha) {
 
         if (isLowerCase(tokenLido.charAt(0))) {//Verifica se primeiro caractere é minusculo p/ gerar var
             return new Token(TipoToken.Var, tokenLido);
         } else if (isDigit(tokenLido.charAt(0))) { 
             if (tokenLido.contains(".")) {//Verifica presença de '.' para gerar numero real ou inteiro
+                
                 return new Token(TipoToken.NumReal, tokenLido);
             } else {
                 return new Token(TipoToken.NumInt, tokenLido);

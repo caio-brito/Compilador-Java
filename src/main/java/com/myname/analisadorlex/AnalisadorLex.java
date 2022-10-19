@@ -13,7 +13,7 @@ public class AnalisadorLex {
 
     public static void main(String[] args) throws IOException {
 
-        ArrayList<Token> tokenList = new ArrayList<>();
+        ArrayList<TipoToken> siglaList = new ArrayList<>();
         
         Leitura l = new Leitura(args[0]);
         GyhLex identChar = new GyhLex();
@@ -43,13 +43,13 @@ public class AnalisadorLex {
                         if (token2.equals("=")) {
                             juntar = token1 + token2;
                             s = identChar.geraToken(juntar, counter);
-                            tokenList.add(s);
+                            siglaList.add(s.sigla);
                             System.out.print(s);
                             entrou = true;
                         } else {
                             if (token2.equals(" ") == false) {//gera > se o proximo token diff de "=" 
                                 s = identChar.geraToken(token1, counter);
-                                tokenList.add(s);
+                                siglaList.add(s.sigla);
                                 System.out.print(s);
                                 token1 = token2;
                             }
@@ -60,13 +60,13 @@ public class AnalisadorLex {
                         if (token2.equals("=")) {
                             juntar = token1 + token2;
                             s = identChar.geraToken(juntar, counter);
-                            tokenList.add(s);
+                            siglaList.add(s.sigla);
                             System.out.print(s);
                             entrou = true;
                         } else {
                             if (token2.equals(" ") == false) {//gera < se o proximo token diff de "="
                                 s = identChar.geraToken(token1, counter);
-                               tokenList.add(s);
+                               siglaList.add(s.sigla);
                                 System.out.print(s);
                                 token1 = token2;
                             }
@@ -77,13 +77,13 @@ public class AnalisadorLex {
                         if (token2.equals("=")) {
                             juntar = token1 + token2;
                             s = identChar.geraToken(juntar, counter);
-                            tokenList.add(s);
+                            siglaList.add(s.sigla);
                             System.out.print(s);
                             entrou = true;
                         } else {
                             if (token2.equals(" ") == false) {//gera = se o proximo token diff de "="
                                 s = identChar.geraToken(token1, counter);
-                                tokenList.add(s);
+                                siglaList.add(s.sigla);
                                 System.out.print(s);
                                 token1 = token2;
                             }
@@ -94,19 +94,19 @@ public class AnalisadorLex {
                         if (token2.equals("=")) {
                             juntar = token1 + token2;
                             s = identChar.geraToken(juntar, counter);
-                            tokenList.add(s);
+                            siglaList.add(s.sigla);
                             System.out.print(s);
                             entrou = true;
                         } else {
                             
                             if (token2.equals(" ") == false) {//gera ! se o proximo token diff de "="
                                 s = identChar.geraToken(token1, counter);
-                                tokenList.add(s);
+                                siglaList.add(s.sigla);
                                 System.out.print(s);
                                 token1 = token2;
                             }else if (token2.equals(" ") == true){//ignora o token espaco pra nao gerar falso erro
                                 s = identChar.geraToken(token1, counter);
-                                tokenList.add(s);
+                                siglaList.add(s.sigla);
                                 System.out.print(s);
                                 entrou = true;
                             }
@@ -117,13 +117,13 @@ public class AnalisadorLex {
                         if (token2.equals("=")) {
                             juntar = token1 + token2;
                             s = identChar.geraToken(juntar, counter);
-                            tokenList.add(s);
+                            siglaList.add(s.sigla);
                             System.out.print(s);
                             entrou = true;
                         } else {
                             if (token2.equals(" ") == false) {//gera : se o proximo token diff de "="
                                 s = identChar.geraToken(token1, counter);
-                                tokenList.add(s);
+                                siglaList.add(s.sigla);
                                 System.out.print(s);
                                 token1 = token2;
                             }
@@ -139,14 +139,14 @@ public class AnalisadorLex {
                             juntar = juntar + token2;
                         }
                         s = identChar.geraToken(juntar, counter);
-                        tokenList.add(s);
+                        siglaList.add(s.sigla);
                         System.out.print(s);
                         entrou = true;
                     }
 
                     if (entrou == false) {//se nao houve uso de ambas os tokens pegos, printa token que sobrou
                         s = identChar.geraToken(token1, counter);
-                        tokenList.add(s);
+                        siglaList.add(s.sigla);
                         System.out.print(s);
                     }
                 }
@@ -155,6 +155,6 @@ public class AnalisadorLex {
              System.out.print("\n");
             counter++;
         }
-        System.out.print(tokenList.toString());
+        System.out.print(siglaList.toString());
     }
 }
