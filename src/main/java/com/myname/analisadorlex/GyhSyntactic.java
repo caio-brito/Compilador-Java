@@ -19,48 +19,131 @@ public class GyhSyntactic {
 
         if (tokenList.get(index + 1).toString().equals("PCProg")) {//Transforma a sigla em string para realizar a comparação
             index++;
-
             ListaComandos(tokenList);
         } else {
             System.out.println("Erro sintático na declaração do lexema palavra-chave, faltando PROG");
         }
 
+    }//End PCPogAnalizer
+
+    public void ComandoEntrada(ArrayList<TipoToken> tokenList) {
+
+        if (tokenList.get(index + 1).toString().equals("Var")) {
+            index++;
+            ListaComandos(tokenList);
+        } else {
+            System.out.println("Erro no comando, esperado LER + Variavel");
+        }
     }
-    
-    public void ComandoEntrada(ArrayList<TipoToken> tokenList){
+
+    public void ComandoAtribuicao(ArrayList<TipoToken> tokenList) {
+
+        if (tokenList.get(index + 1).toString().equals("Atrib")) {
+            index++;
+            ExpressaoAritmetica(tokenList);
+        } else {
+
+        }//Erro na atribuicao, esperava-se um simbolo de atribuicao 
+    }//End ComandoAtribuicao
+
+    public void ExpressaoAritmetica(ArrayList<TipoToken> tokenList) {
+
+        TermoAritmetico(tokenList);
+
+//        if (tokenList.get(index + 1).toString().equals("+") || tokenList.get(index + 1).toString().equals("-")) {
+//
+//        }
+    }//End ExpressaoAritmetica
+
+    public void ExpressaoAritmeticaLinha(ArrayList<TipoToken> tokenList) {
+
+    }
+
+    public void TermoAritmetico(ArrayList<TipoToken> tokenList) {
+
+        FatorAritmetico(tokenList);
+        TermoAritmeticoLinha(tokenList);
+
+    }//End TermoAritmetico
+
+    public void TermoAritmeticoLinha(ArrayList<TipoToken> tokenList) {
+
+        index++;           
+        switch(tokenList.get(index).toString()){
+            
+            case "OpAritMult":
+                FatorAritmetico(tokenList);
+                
+                TermoAritmeticoLinha(tokenList);
+                break;
+                
+            case "OpAritDiv":
+                System.out.println(tokenList.get(index).toString());
+                FatorAritmetico(tokenList);
+                TermoAritmeticoLinha(tokenList);
+                break;
         
-         if (tokenList.get(index + 1).toString().equals("Var")) {
-             index++;
-             System.out.println("Chamou PCLer do comando entrada");
-             ListaComandos(tokenList);
-         }else{
-             System.out.println("Erro no comando, esperado LER + Variavel");
-         }
+            default:
+                System.out.println(tokenList.get(index).toString());
+                break;
+        }
+    }//End TermoAritmeticoLinha
+
+    public void FatorAritmetico(ArrayList<TipoToken> tokenList) {
+
+        index++;
+        switch (tokenList.get(index).toString()) {
+
+            case "NumInt":
+                System.out.println(tokenList.get(index).toString());
+                break;
+            case "Var":
+ 
+                break;
+            case "NumReal":
+                break;
+            case "(":
+
+                //chamar expressao aritmetica
+                break;
+
+            case ")":
+
+                break;
+
+            default:
+                
+                
+                //Colocar erro
+                break;
+        }
+
     }
 
     public void ListaComandos(ArrayList<TipoToken> tokenList) {
 
         index++;
 
+        
         switch (tokenList.get(index).toString()) {
 
             case "PCLer":
-                
+
                 ComandoEntrada(tokenList);
-                
+
                 break;
-                
+
             case "Var":
-                
-                System.out.println("Chamou a verificação do var");
-                
+
+                ComandoAtribuicao(tokenList);
+
                 break;
 
             default:
                 break;
-        }
+        }//End switch
 
-    }
+    }//End ListaComandos
 
     public void ListDeclaracoes(ArrayList<TipoToken> tokenList) {
 
