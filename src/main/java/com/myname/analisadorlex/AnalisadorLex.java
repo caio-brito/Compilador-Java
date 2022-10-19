@@ -154,7 +154,12 @@ public class AnalisadorLex {
             LinhaLida = l.LerLinha();//recebe nova linha a ser lexicamente analisada
              System.out.print("\n");
             counter++;
+            
         }
         System.out.print(siglaList.toString());
+        System.out.print("\n");
+        var teeeeste = new GyhSyntactic();
+        teeeeste.SyntaticAnalizer(siglaList);
+        
     }
 }

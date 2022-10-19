@@ -6,7 +6,7 @@ fatorial:INT
 
 :PROG 
 # Calcula o fatorial de um número inteiro
-LER parametro
+LER FDQWQ
 fatorial := parametro 
 SE parametro == 0 ENTAO fatorial := 1
 ENQTO parametro > 1
