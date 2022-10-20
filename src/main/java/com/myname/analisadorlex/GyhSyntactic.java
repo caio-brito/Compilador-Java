@@ -43,7 +43,7 @@ public class GyhSyntactic {
             ExpressaoAritmetica(tokenList);
             ListaComandos(tokenList);
         } else {
-
+            System.out.println("Inesperado Token: " + tokenList.get(index + 1).toString());
         }//Erro na atribuicao, esperava-se um simbolo de atribuicao 
     }//End ComandoAtribuicao
 
@@ -248,12 +248,13 @@ public class GyhSyntactic {
     }
 
     public void SubAlgoritmo(ArrayList<TipoToken> tokenList) {
-        ListaComandos(tokenList);
 
-        if (!tokenList.get(index + 1).toString().equals("FIM")) {
+        ListaComandos(tokenList);
+        if (!tokenList.get(index + 1).toString().equals("PCFim")) {
+            index++;
+        } else {
             System.out.println("Erro, espera-se um FIM para completar o INI");
         }
-        index++;
     }
 
     public void ListaComandos(ArrayList<TipoToken> tokenList) {
@@ -281,14 +282,18 @@ public class GyhSyntactic {
                 ComandoRepeticao(tokenList);
                 break;
 
-            case "INI":
+            case "PCIni":
                 SubAlgoritmo(tokenList);
                 break;
 
             default:
+                
+                if(tokenList.get(index).equals("(")){
+                    System.out.println("Inesperado Token: " + tokenList.get(index).toString());
+                }
                 break;
-        }//End switch
 
+        }//End switch
     }//End ListaComandos
 
     public void ListDeclaracoes(ArrayList<TipoToken> tokenList) {

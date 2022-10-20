@@ -1,5 +1,3 @@
-#Erro Léxico: <_> caractere desconhecido
-
 :DEC
 parametro:INT
 fatorial:INT
@@ -7,12 +5,12 @@ fatorial:INT
 :PROG 
 # Calcula o fatorial de um número inteiro
 LER parametro
-fatorial := parametro * 2 + 2
+fatorial := parametro 
 SE parametro == 0 ENTAO fatorial := 1
 ENQTO parametro > 1
-INI
-fatorial := fatorial * (parametro _ 1) 
-parametro := parametro - 1
-FIM
+ INI
+  fatorial := fatorial * (parametro - 1) 
+  parametro := parametro - 1
+ FIM
 IMPRIMIR fatorial
 IMPRIMIR "Oi"

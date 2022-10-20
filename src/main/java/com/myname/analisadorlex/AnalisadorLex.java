@@ -160,6 +160,5 @@ public class AnalisadorLex {
         System.out.print("\n");
         var teeeeste = new GyhSyntactic();
         teeeeste.SyntaticAnalizer(siglaList);
-        
     }
 }
