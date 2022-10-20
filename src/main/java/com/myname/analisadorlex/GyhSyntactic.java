@@ -2,14 +2,14 @@ package com.myname.analisadorlex;
 
 import java.util.ArrayList;
 
-public class GyhSyntactic {
+public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das siglas dos tokens, as quais são passadas recusrivamente pelas regras da gramatica GYH até que se obtenha uma validação ou erro sintático
 
-    private int index = 0;
+    private int index = 0;//inteiro utilizado como ponteiro para andar pelos tokens sem perder a posição atual e ainda podendo verificar a proxima ou mais
 
-    public void DelimAnalizer(ArrayList<TipoToken> tokenList) {
+    public void DelimAnalizer(ArrayList<TipoToken> tokenList) {//Verifica se é um delimitador e se a linguagem possui um DEC
         if (tokenList.get(index + 1).toString().equals("PCDec")) {//Transforma a sigla em string para realizar a comparação
             index++;
-            ListDeclaracoes(tokenList);
+            ListDeclaracoes(tokenList);//Chama a lisca
         } else {
             System.out.println("Erro sintático na declaração do lexema palavra-chave, faltando DEC");
         }
@@ -26,17 +26,17 @@ public class GyhSyntactic {
 
     }//End PCPogAnalizer
 
-    public void ComandoEntrada(ArrayList<TipoToken> tokenList) {
+    public void ComandoEntrada(ArrayList<TipoToken> tokenList) {//Faz a verificação do tipo LER VAR que se espera na gramatica do codigo
 
-        if (tokenList.get(index + 1).toString().equals("Var")) {
+        if (tokenList.get(index + 1).toString().equals("Var")) {//Verifica se há um tipo var a ser utilizado, para chamar a funcao com seguranca
             index++;
             ListaComandos(tokenList);
         } else {
             System.out.println("Erro no comando, esperado LER + Variavel");
         }
-    }
+    }//End ComandoEntrada
 
-    public void ComandoAtribuicao(ArrayList<TipoToken> tokenList) {
+    public void ComandoAtribuicao(ArrayList<TipoToken> tokenList) {//Verifica a coerencia da atribuição de valores a variaveis
 
         if (tokenList.get(index + 1).toString().equals("Atrib")) {
             index++;
@@ -44,10 +44,10 @@ public class GyhSyntactic {
             ListaComandos(tokenList);
         } else {
             System.out.println("Inesperado Token: " + tokenList.get(index + 1).toString());
-        }//Erro na atribuicao, esperava-se um simbolo de atribuicao 
+        }
     }//End ComandoAtribuicao
 
-    public void ComandosSaida(ArrayList<TipoToken> tokenList) {
+    public void ComandosSaida(ArrayList<TipoToken> tokenList) {//Verifica a composição da linguagem GYH 'IMPRIMIR' VARIAVEL | 'IMPRIMIR' CADEIA;
 
         if (tokenList.get(index + 1).toString().equals("Var") || tokenList.get(index + 1).toString().equals("Cadeia")) {
             index++;
@@ -56,11 +56,11 @@ public class GyhSyntactic {
         }
     }
 
-    public void ComandoCondicao(ArrayList<TipoToken> tokenList) {
+    public void ComandoCondicao(ArrayList<TipoToken> tokenList) {//Verifica ComandoCondicao → 'SE' ExpressaoRelacional 'ENTAO' Comando CondA’. tendo ja recebido a verificação com a existencia de SE 
 
         ExpressaoRelacional(tokenList);
 
-        if (tokenList.get(index + 1).toString().equals("PCEntao")) {
+        if (tokenList.get(index + 1).toString().equals("PCEntao")) {//Todo SE precisa de ENTAO, faz-se a verificação da existencia do mesmo para tratamento de erros
             index++;
             ListaComandos(tokenList);
             CondALinha(tokenList);
@@ -69,7 +69,7 @@ public class GyhSyntactic {
         }
     }
 
-    public void ComandoRepeticao(ArrayList<TipoToken> tokenList) {
+    public void ComandoRepeticao(ArrayList<TipoToken> tokenList) {//Inicia o loop recursivo de verificações
 
         ExpressaoRelacional(tokenList);
         ListaComandos(tokenList);
@@ -217,7 +217,7 @@ public class GyhSyntactic {
         }
     }//End TermoAritmeticoLinha
 
-    public void FatorAritmetico(ArrayList<TipoToken> tokenList) {
+    public void FatorAritmetico(ArrayList<TipoToken> tokenList) {//Faz as verificação dos terminais NumInt,Var, NumReal além de 
 
         switch (tokenList.get(index + 1).toString()) {
 
@@ -230,11 +230,11 @@ public class GyhSyntactic {
             case "NumReal":
                 index++;
                 break;
-            case "(":
+            case "AbrePar":
                 index++;
                 ExpressaoAritmetica(tokenList);
-
-                if (!tokenList.get(index + 1).toString().equals("FechaPar")) {
+                index++;
+                if (!tokenList.get(index).toString().equals("FechaPar")) {
                     System.out.println("Erro, espera-se um fecha parenteses");
                 }
                 break;
@@ -247,17 +247,15 @@ public class GyhSyntactic {
 
     }
 
-    public void SubAlgoritmo(ArrayList<TipoToken> tokenList) {
+    public void SubAlgoritmo(ArrayList<TipoToken> tokenList) {//Verifica presença do PCFim para validar o SubAlgoritmo  
 
         ListaComandos(tokenList);
-        if (!tokenList.get(index + 1).toString().equals("PCFim")) {
-            index++;
-        } else {
+        if (!tokenList.get(index).toString().equals("PCFim")) {
             System.out.println("Erro, espera-se um FIM para completar o INI");
         }
     }
 
-    public void ListaComandos(ArrayList<TipoToken> tokenList) {
+    public void ListaComandos(ArrayList<TipoToken> tokenList) {//Encaminha o programa para o Comando referente ao token analisado  
 
         index++;
         switch (tokenList.get(index).toString()) {
@@ -287,8 +285,8 @@ public class GyhSyntactic {
                 break;
 
             default:
-                
-                if(tokenList.get(index).equals("(")){
+
+                if (!tokenList.get(index).toString().equals("PCFim")) {
                     System.out.println("Inesperado Token: " + tokenList.get(index).toString());
                 }
                 break;
@@ -296,8 +294,7 @@ public class GyhSyntactic {
         }//End switch
     }//End ListaComandos
 
-    public void ListDeclaracoes(ArrayList<TipoToken> tokenList) {
-
+    public void ListDeclaracoes(ArrayList<TipoToken> tokenList) {//Verifica a composição do codigo que segue apos :DEC, validando as declarações
         if (tokenList.get(index + 1).toString().equals("Var")) {
             index++;
             if (tokenList.get(index + 1).toString().equals("Delim")) {
