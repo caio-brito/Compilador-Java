@@ -8,8 +8,12 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
     private boolean sucessoPrograma = true;//Variavel booleana utilizada para definir se o programa foi bem sucessedido ou não
     String vermelho = "\u001B[31m";
     String verde = "\u001B[32m";
-    
+
     public void DelimAnalizer(ArrayList<TipoToken> tokenList) {//Verifica se é um delimitador e se a linguagem possui um DEC
+
+        System.out.println("----------------------------Analisador Sintático----------------------------");
+        System.out.print("\n");
+
         if (tokenList.get(index + 1).toString().equals("PCDec")) {//Transforma a sigla em string para realizar a comparação
             index++;
             ListDeclaracoes(tokenList);//Chama a lisca
@@ -17,15 +21,14 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
             sucessoPrograma = false;
             System.out.println("Erro sintático na declaração do lexema palavra-chave, faltando DEC");
         }
-        
+
         System.out.println('\n');
-        System.out.println('\n');
-        
+
         if (sucessoPrograma) {//Mensagem final indicando o estado final do programa
 
             System.out.println("Programa compilado com sucesso, nenhum erro sintatico detectado!!!!" + verde);
-        }else{
-            System.out.println("Programa compilado sem sucesso, erro(s) sintatico(s) foram detectados!!!!" + vermelho);
+        } else {
+            System.out.println("Erro(s) sintatico(s) detectado(s) na compilação do programa!!!!" + vermelho);
         }
     }//End DelimAnalizer
 
@@ -264,7 +267,7 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
 
             default:
                 sucessoPrograma = false;
-                System.out.println("Erro, espera-se um numero inteiro, variavel, abre parenteses ou uma numero real");
+                System.out.println("Erro, espera-se um numero inteiro, variavel, abre parenteses ou um numero real");
                 break;
         }
 
@@ -320,7 +323,6 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
     }//End ListaComandos
 
     //Começamos sem saber o que estavamos fazendo, então releva essa bizarrice aqui embaixo, por favor professora hehehe XD
-    
     public void ListDeclaracoes(ArrayList<TipoToken> tokenList) {//Verifica a composição do codigo que segue apos :DEC, validando as declarações
         if (tokenList.get(index + 1).toString().equals("Var")) {
             index++;
