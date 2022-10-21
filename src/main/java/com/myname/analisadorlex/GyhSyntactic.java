@@ -6,7 +6,9 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
 
     private int index = 0;//inteiro utilizado como ponteiro para andar pelos tokens sem perder a posição atual e ainda podendo verificar a proxima ou mais
     private boolean sucessoPrograma = true;//Variavel booleana utilizada para definir se o programa foi bem sucessedido ou não
-
+    String vermelho = "\u001B[31m";
+    String verde = "\u001B[32m";
+    
     public void DelimAnalizer(ArrayList<TipoToken> tokenList) {//Verifica se é um delimitador e se a linguagem possui um DEC
         if (tokenList.get(index + 1).toString().equals("PCDec")) {//Transforma a sigla em string para realizar a comparação
             index++;
@@ -20,12 +22,10 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
         System.out.println('\n');
         
         if (sucessoPrograma) {//Mensagem final indicando o estado final do programa
-            
-            System.out.println("\u001B[32m");
-            System.out.println("Programa compilado com sucesso, nenhum erro sintatico detectado!!!!");
+
+            System.out.println("Programa compilado com sucesso, nenhum erro sintatico detectado!!!!" + verde);
         }else{
-            System.out.println("\u001B[31m");
-            System.out.println("Programa compilado sem sucesso, erro(s) sintatico(s) foram detectados!!!!");
+            System.out.println("Programa compilado sem sucesso, erro(s) sintatico(s) foram detectados!!!!" + vermelho);
         }
     }//End DelimAnalizer
 
