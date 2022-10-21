@@ -1,8 +1,8 @@
-
 /*
 *Caio Vinicius Oliveira Brito RA:2150905
 *Vitor Augusto Ozanick        RA:2152401 
  */
+
 package com.myname.analisadorlex;
 
 import java.io.IOException;

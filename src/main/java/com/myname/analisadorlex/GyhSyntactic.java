@@ -5,13 +5,27 @@ import java.util.ArrayList;
 public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das siglas dos tokens, as quais são passadas recusrivamente pelas regras da gramatica GYH até que se obtenha uma validação ou erro sintático
 
     private int index = 0;//inteiro utilizado como ponteiro para andar pelos tokens sem perder a posição atual e ainda podendo verificar a proxima ou mais
+    private boolean sucessoPrograma = true;//Variavel booleana utilizada para definir se o programa foi bem sucessedido ou não
 
     public void DelimAnalizer(ArrayList<TipoToken> tokenList) {//Verifica se é um delimitador e se a linguagem possui um DEC
         if (tokenList.get(index + 1).toString().equals("PCDec")) {//Transforma a sigla em string para realizar a comparação
             index++;
             ListDeclaracoes(tokenList);//Chama a lisca
         } else {
+            sucessoPrograma = false;
             System.out.println("Erro sintático na declaração do lexema palavra-chave, faltando DEC");
+        }
+        
+        System.out.println('\n');
+        System.out.println('\n');
+        
+        if (sucessoPrograma) {//Mensagem final indicando o estado final do programa
+            
+            System.out.println("\u001B[32m");
+            System.out.println("Programa compilado com sucesso, nenhum erro sintatico detectado!!!!");
+        }else{
+            System.out.println("\u001B[31m");
+            System.out.println("Programa compilado sem sucesso, erro(s) sintatico(s) foram detectados!!!!");
         }
     }//End DelimAnalizer
 
@@ -21,6 +35,7 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
             index++;
             ListaComandos(tokenList);
         } else {
+            sucessoPrograma = false;
             System.out.println("Erro sintático na declaração do lexema palavra-chave, faltando PROG");
         }
 
@@ -32,6 +47,7 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
             index++;
             ListaComandos(tokenList);
         } else {
+            sucessoPrograma = false;
             System.out.println("Erro no comando, esperado LER + Variavel");
         }
     }//End ComandoEntrada
@@ -43,6 +59,7 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
             ExpressaoAritmetica(tokenList);
             ListaComandos(tokenList);
         } else {
+            sucessoPrograma = false;
             System.out.println("Inesperado Token: " + tokenList.get(index + 1).toString());
         }
     }//End ComandoAtribuicao
@@ -52,6 +69,7 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
         if (tokenList.get(index + 1).toString().equals("Var") || tokenList.get(index + 1).toString().equals("Cadeia")) {
             index++;
         } else {
+            sucessoPrograma = false;
             System.out.println("Erro, IMPRIMIR espera uma variavel ou uma cadeia");
         }
     }
@@ -65,6 +83,7 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
             ListaComandos(tokenList);
             CondALinha(tokenList);
         } else {
+            sucessoPrograma = false;
             System.out.println("Erro, SE espera uma finalização ENTAO para as condições");
         }
     }
@@ -75,7 +94,7 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
         ListaComandos(tokenList);
     }
 
-    public void ExpressaoRelacional(ArrayList<TipoToken> tokenList) {
+    public void ExpressaoRelacional(ArrayList<TipoToken> tokenList) {//Executa as regras ExpressaoRelacional → TermoRelacional A’ | TermoRelacional
 
         TermoRelacional(tokenList);
         if (tokenList.get(index + 1).toString().equals("OpBoolE") || tokenList.get(index + 1).toString().equals("OpBoolOU")) {
@@ -83,7 +102,7 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
         }
     }
 
-    public void RelALinha(ArrayList<TipoToken> tokenList) {
+    public void RelALinha(ArrayList<TipoToken> tokenList) {//Executa a regra A’→ OperadorBooleano TermoRelacional A’ | λ
 
         OperadorBooleano(tokenList);
         TermoRelacional(tokenList);
@@ -93,7 +112,7 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
         }
     }
 
-    public void OperadorBooleano(ArrayList<TipoToken> tokenList) {
+    public void OperadorBooleano(ArrayList<TipoToken> tokenList) {//Verifica se o token em questão é booleano
 
         switch (tokenList.get(index + 1).toString()) {
 
@@ -106,12 +125,13 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
                 break;
 
             default:
+                sucessoPrograma = false;
                 System.out.println("Erro, é esperado um operador booleano (E ou OU)");
                 break;
         }//End switch
     }//End OperadorBooleano
 
-    public void TermoRelacional(ArrayList<TipoToken> tokenList) {
+    public void TermoRelacional(ArrayList<TipoToken> tokenList) {//Executa e faz as verificações da regra TermoRelacional → ExpressaoAritmetica OP_REL ExpressaoAritmetica | '(' ExpressaoRelacional ')';
 
         if (tokenList.get(index + 1).toString().equals("AbrePar")) {
             index++;
@@ -120,6 +140,7 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
             if (tokenList.get(index + 1).toString().equals("FechaPar")) {
 
             } else {
+                sucessoPrograma = false;
                 System.out.println("Erro, esperado um fecha parenteses");
             }
         } else {
@@ -129,12 +150,13 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
                 index++;
                 ExpressaoAritmetica(tokenList);
             } else {
+                sucessoPrograma = false;
                 System.out.println("Erro, faltando um operador relacional na condição");
             }
         }
     }
 
-    public boolean VerificaOP_REL(String siglaOP) {
+    public boolean VerificaOP_REL(String siglaOP) {//Verifica se o token é um operador relacional
 
         switch (siglaOP) {
 
@@ -154,7 +176,7 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
         return false;
     }
 
-    public void CondALinha(ArrayList<TipoToken> tokenList) {
+    public void CondALinha(ArrayList<TipoToken> tokenList) {//verifica a composiçao do SENAO seguido da ListaComando para a coerencia da regra ComandoCondicao 
 
         if (tokenList.get(index + 1).toString().equals("PCSenao")) {
             index++;
@@ -162,13 +184,13 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
         }
     }
 
-    public void ExpressaoAritmetica(ArrayList<TipoToken> tokenList) {
+    public void ExpressaoAritmetica(ArrayList<TipoToken> tokenList) {//Inicia o loop recursivo de verificações
 
         TermoAritmetico(tokenList);
         ExpressaoAritmeticaLinha(tokenList);
     }//End ExpressaoAritmetica
 
-    public void ExpressaoAritmeticaLinha(ArrayList<TipoToken> tokenList) {
+    public void ExpressaoAritmeticaLinha(ArrayList<TipoToken> tokenList) {//Verifica a ocrrencia dos operadores soma e sub para compor a ExpressãoAritmetica
 
         switch (tokenList.get(index + 1).toString()) {
 
@@ -189,14 +211,14 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
         }
     }
 
-    public void TermoAritmetico(ArrayList<TipoToken> tokenList) {
+    public void TermoAritmetico(ArrayList<TipoToken> tokenList) {//Inicia o loop recursivo de verificações
 
         FatorAritmetico(tokenList);
         TermoAritmeticoLinha(tokenList);
 
     }//End TermoAritmetico
 
-    public void TermoAritmeticoLinha(ArrayList<TipoToken> tokenList) {
+    public void TermoAritmeticoLinha(ArrayList<TipoToken> tokenList) {//Verifica a ocrrencia dos operadores soma e sub para compor a ExpressãoAritmetica
 
         switch (tokenList.get(index + 1).toString()) {
 
@@ -235,13 +257,14 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
                 ExpressaoAritmetica(tokenList);
                 index++;
                 if (!tokenList.get(index).toString().equals("FechaPar")) {
+                    sucessoPrograma = false;
                     System.out.println("Erro, espera-se um fecha parenteses");
                 }
                 break;
 
             default:
-
-                //Colocar erro
+                sucessoPrograma = false;
+                System.out.println("Erro, espera-se um numero inteiro, variavel, abre parenteses ou uma numero real");
                 break;
         }
 
@@ -251,6 +274,7 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
 
         ListaComandos(tokenList);
         if (!tokenList.get(index).toString().equals("PCFim")) {
+            sucessoPrograma = false;
             System.out.println("Erro, espera-se um FIM para completar o INI");
         }
     }
@@ -287,6 +311,7 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
             default:
 
                 if (!tokenList.get(index).toString().equals("PCFim")) {
+                    sucessoPrograma = false;
                     System.out.println("Inesperado Token: " + tokenList.get(index).toString());
                 }
                 break;
@@ -294,6 +319,8 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
         }//End switch
     }//End ListaComandos
 
+    //Começamos sem saber o que estavamos fazendo, então releva essa bizarrice aqui embaixo, por favor professora hehehe XD
+    
     public void ListDeclaracoes(ArrayList<TipoToken> tokenList) {//Verifica a composição do codigo que segue apos :DEC, validando as declarações
         if (tokenList.get(index + 1).toString().equals("Var")) {
             index++;
@@ -310,12 +337,15 @@ public class GyhSyntactic {//Codigo baseado em uma sequencia de resolucoes das s
 
                     }//End else if
                 } else {
+                    sucessoPrograma = false;
                     System.out.println("Erro na declaração do tipo da variavel");
                 }//End else erro na declaração do tipo da variavel
             } else {
+                sucessoPrograma = false;
                 System.out.println("Erro na declaração do delimitador(atribuição) da variavel");
             }//End else erro na declaração do delimitador(atribuição) da variavel
         } else {
+            sucessoPrograma = false;
             System.out.println("Erro na declaração do do nome da variavel");
         }//End else erro na declaração do nome da variavel
     }//End ListDeclaracoes
